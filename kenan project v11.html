@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kenan Foundation Asia – Project Portfolio Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue-900: #1a2e40;
+    --blue-800: #1e3a54;
+    --blue-700: #2a4e6e;
+    --blue-600: #2f5880;
+    --blue-500: #3a6d99;
+    --blue-400: #4476a5;
+    --blue-300: #6d9fc0;
+    --blue-200: #a8c8dc;
+    --blue-100: #d4e8f2;
+    --blue-50:  #eaf3f9;
+    --white:    #ffffff;
+    --gray-100: #f4f6fa;
+    --gray-200: #e8ecf4;
+    --gray-400: #9aa5b8;
+    --gray-600: #5a6478;
+    --accent:   #4476a5;
+    --accent2:  #ffd166;
+    --shadow-sm: 0 2px 8px rgba(18,70,160,0.10);
+    --shadow-md: 0 6px 24px rgba(18,70,160,0.14);
+    --shadow-lg: 0 16px 48px rgba(18,70,160,0.18);
+    --radius: 14px;
+    --radius-sm: 8px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { html{scroll-behavior:smooth;font-size:16px}; }
+  body {
+    font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
+    background: var(--blue-900);
+    color: var(--white);
+    min-height: 100vh;
+  }
+
+  /* ─── SIDEBAR NAV ─────────────────────────────── */
+  .sidebar {
+    position: fixed; left: 0; top: 0; bottom: 0; width: 220px;
+    background: var(--blue-800);
+    border-right: 1px solid rgba(255,255,255,0.08);
+    display: flex; flex-direction: column;
+    z-index: 100; padding: 0;
+    overflow-y: auto;
+  }
+  .sidebar-logo {
+    padding: 28px 20px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .logo-icon {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, var(--blue-400), var(--accent));
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 800; color: white;
+    flex-shrink: 0;
+  }
+  .logo-text { font-size: 13px; font-weight: 700; color: white; line-height: 1.3; }
+  .logo-sub  { font-size: 10px; color: var(--blue-300); font-weight: 400; }
+
+  .sidebar-section-title {
+    font-size: 9px; font-weight: 700; letter-spacing: 1.4px;
+    text-transform: uppercase; color: var(--blue-400);
+    padding: 18px 20px 8px;
+  }
+  .nav-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 20px; font-size: 12.5px; font-weight: 500;
+    color: var(--blue-200); text-decoration: none;
+    border-radius: 0; cursor: pointer; transition: all 0.2s;
+    border-left: 3px solid transparent;
+  }
+  .nav-item:hover, .nav-item.active {
+    background: rgba(255,255,255,0.06);
+    color: white;
+    border-left-color: var(--accent);
+  }
+  .nav-item .nav-badge {
+    margin-left: auto; background: var(--blue-600); color: var(--blue-100);
+    font-size: 10px; font-weight: 600;
+    padding: 2px 7px; border-radius: 20px; min-width: 26px; text-align: center;
+  }
+  .nav-icon { font-size: 15px; width: 18px; flex-shrink: 0; }
+
+  /* ─── MAIN CONTENT ────────────────────────────── */
+  .main {
+    margin-left: 220px;
+    min-height: 100vh;
+    padding: 0 32px 60px;
+    background: var(--blue-900);
+  }
+
+  /* ─── TOP HEADER ──────────────────────────────── */
+  .page-header {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(30,58,84,0.97);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    padding: 16px 0;
+    margin: 0 -32px 0;
+    padding-left: 32px; padding-right: 32px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .page-header .header-supertitle { font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--blue-300); margin-bottom: 4px; }
+  .page-header h1 { font-size: 17px; font-weight: 800; line-height: 1.3; color: white; }
+  .page-header .subtitle { font-size: 12px; color: var(--blue-300); }
+  .header-stats { display: flex; gap: 0; border-left: 1px solid rgba(255,255,255,.12); }
+  .hstat { text-align: center; padding: 8px 24px; border-right: 1px solid rgba(255,255,255,.12); }
+  .hstat-val { font-size: 42px; font-weight: 800; color: #ffffff; line-height: 1; letter-spacing: -.02em; }
+  .hstat-lbl { font-size: 11px; color: var(--blue-200); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; margin-top: 4px; }
+
+  /* ─── SECTION ─────────────────────────────────── */
+  .section {
+    padding-top: 44px;
+  }
+  .section-title {
+    font-size: 22px; font-weight: 800;
+    color: white; margin-bottom: 6px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-title .pill {
+    font-size: 11px; font-weight: 600; padding: 3px 12px;
+    border-radius: 20px; background: var(--blue-600);
+    color: var(--blue-100);
+  }
+  .section-desc { font-size: 13px; color: var(--blue-300); margin-bottom: 24px; }
+
+  /* ─── STATS CARDS ─────────────────────────────── */
+  .stats-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 16px; margin-bottom: 32px;
+  }
+  .stat-card {
+    background: var(--blue-800);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius);
+    padding: 22px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative; overflow: hidden;
+  }
+  .stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+  .stat-card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--blue-400), var(--accent));
+  }
+  .stat-card .val { font-size: 36px; font-weight: 800; color: var(--blue-300); line-height: 1; margin-bottom: 4px; }
+  .stat-card .lbl { font-size: 12px; font-weight: 600; color: var(--blue-200); }
+  .stat-card .sub { font-size: 11px; color: var(--gray-400); margin-top: 2px; }
+  .stat-card .icon { position: absolute; top: 16px; right: 18px; font-size: 28px; opacity: 0.3; }
+
+  /* ─── UNIT BREAKDOWN ──────────────────────────── */
+  .unit-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 14px; margin-bottom: 32px;
+  }
+  .unit-card {
+    background: var(--blue-800);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius);
+    padding: 18px 22px;
+    cursor: pointer; transition: all 0.25s;
+    position: relative; overflow: hidden;
+  }
+  .unit-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+  .unit-card.selected {
+    border-color: var(--blue-400);
+    background: rgba(30,70,150,0.45);
+  }
+  .unit-card .unit-name { font-size: 16px; font-weight: 700; color: white; }
+  .unit-card .unit-full { font-size: 11px; color: var(--blue-300); margin-top: 2px; }
+  .unit-card .unit-count {
+    position: absolute; top: 16px; right: 18px;
+    font-size: 28px; font-weight: 800;
+    color: var(--blue-400); opacity: 0.9;
+  }
+  .unit-card .unit-bar {
+    height: 4px; background: rgba(255,255,255,0.1);
+    border-radius: 2px; margin-top: 12px; overflow: hidden;
+  }
+  .unit-card .unit-bar-fill {
+    height: 100%; border-radius: 2px;
+    background: linear-gradient(90deg, var(--blue-400), var(--accent));
+  }
+
+  
+  /* ─── FILTER BAR ──────────────────────────────── */
+  .filter-bar {
+    display: flex; gap: 10px; flex-wrap: wrap;
+    margin-bottom: 20px; align-items: center;
+  }
+  .filter-label { font-size: 12px; color: var(--blue-300); font-weight: 500; margin-right: 4px; }
+  .filter-btn {
+    padding: 6px 14px; border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: transparent; color: var(--blue-200);
+    font-size: 12px; font-weight: 500; cursor: pointer; transition: all 0.2s;
+    font-family: inherit;
+  }
+  .filter-btn:hover { border-color: var(--blue-400); color: white; }
+  .filter-btn.active { background: var(--blue-500); border-color: var(--blue-400); color: white; }
+  .search-box {
+    padding: 8px 16px; border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.06);
+    color: white; font-size: 12px; font-family: inherit;
+    outline: none; min-width: 220px; margin-left: auto;
+    transition: border-color 0.2s;
+  }
+  .search-box::placeholder { color: var(--gray-400); }
+  .search-box:focus { border-color: var(--blue-400); }
+
+  /* ─── PROJECT TABLE ───────────────────────────── */
+  .table-wrap {
+    background: var(--blue-800);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .proj-table { width: 100%; border-collapse: collapse; }
+  .proj-table thead th {
+    background: rgba(255,255,255,0.05);
+    padding: 13px 16px;
+    text-align: left; font-size: 11px;
+    font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.8px; color: var(--blue-300);
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .proj-table tbody tr {
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    transition: background 0.15s; cursor: pointer;
+  }
+  .proj-table tbody tr:hover { background: rgba(255,255,255,0.04); }
+  .proj-table tbody tr:last-child { border-bottom: none; }
+  .proj-table td { padding: 12px 16px; font-size: 12.5px; color: var(--blue-100); vertical-align: middle; }
+  .proj-table td.col-name { font-weight: 600; color: white; max-width: 280px; }
+  .proj-table td.col-client { color: var(--blue-300); }
+  .badge {
+    display: inline-block; padding: 3px 10px; border-radius: 12px;
+    font-size: 10.5px; font-weight: 600; white-space: nowrap;
+  }
+  .badge-EDU    { background: rgba(0,198,251,0.15); color: #7dd8ff; }
+  .badge-Business and Economic Development    { background: rgba(26,93,200,0.20); color: #8ab4fd; }
+  .badge-SII { background: rgba(255,209,102,0.15); color: #ffd166; }
+  .badge-VN     { background: rgba(100,200,120,0.15); color: #7de89d; }
+  .badge-Deep-South { background: rgba(200,100,100,0.15); color: #f4a0a0; }
+  .badge-other  { background: rgba(200,200,200,0.12); color: #c8c8c8; }
+
+  /* ─── MODAL ───────────────────────────────────── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(5,15,30,0.85); z-index: 1000;
+    align-items: center; justify-content: center;
+    backdrop-filter: blur(6px);
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--blue-800);
+    border: 1px solid rgba(46,123,244,0.3);
+    border-radius: 18px;
+    padding: 32px;
+    max-width: 640px; width: 90%;
+    max-height: 80vh; overflow-y: auto;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+  }
+  .modal-close {
+    position: absolute; top: 18px; right: 18px;
+    background: rgba(255,255,255,0.08);
+    border: none; color: white; font-size: 18px;
+    width: 32px; height: 32px; border-radius: 50%;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+  .modal-close:hover { background: rgba(255,255,255,0.15); }
+  .modal-unit { margin-bottom: 10px; }
+  .modal-title { font-size: 20px; font-weight: 800; color: white; margin-bottom: 8px; line-height: 1.3; }
+  .modal-client { font-size: 14px; color: var(--blue-300); font-weight: 600; margin-bottom: 16px; }
+  .modal-meta {
+    display: flex; gap: 20px; flex-wrap: wrap;
+    margin-bottom: 20px; padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .modal-meta-item { display: flex; flex-direction: column; gap: 3px; }
+  .modal-meta-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--blue-400); font-weight: 700; }
+  .modal-meta-value { font-size: 13px; color: var(--blue-100); font-weight: 500; }
+  .modal-desc { font-size: 13px; color: var(--blue-200); line-height: 1.7; }
+
+  /* ─── THEME CHART ─────────────────────────────── */
+  .theme-chart { margin-bottom: 32px; }
+  .theme-row {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 8px;
+  }
+  .theme-name { font-size: 12px; color: var(--blue-200); width: 180px; flex-shrink: 0; }
+  .theme-bar-wrap { flex: 1; height: 22px; background: rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden; position: relative; }
+  .theme-bar-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--blue-500), var(--blue-300)); transition: width 1s ease; display: flex; align-items: center; }
+  .theme-bar-val { font-size: 11px; font-weight: 700; color: white; margin-left: 8px; white-space: nowrap; }
+
+  /* ─── TIMELINE ────────────────────────────────── */
+  .timeline-chart-wrap {
+    background: var(--blue-800);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius);
+    padding: 24px; margin-bottom: 32px;
+    overflow-x: auto;
+  }
+  #timeline-canvas { display: block; min-width: 600px; }
+
+  /* ─── SCROLLBAR ───────────────────────────────── */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--blue-600); border-radius: 3px; }
+
+  /* ─── PAGER ───────────────────────────────────── */
+  .pager { display: flex; align-items: center; justify-content: space-between; margin-top: 14px; }
+  .pager-info { font-size: 12px; color: var(--blue-300); }
+  .pager-btns { display: flex; gap: 8px; }
+  .pager-btn {
+    padding: 6px 14px; border-radius: var(--radius-sm);
+    border: 1px solid rgba(255,255,255,0.12);
+    background: transparent; color: var(--blue-200);
+    font-size: 12px; cursor: pointer; transition: all 0.2s; font-family: inherit;
+  }
+  .pager-btn:hover:not(:disabled) { background: var(--blue-600); color: white; border-color: var(--blue-400); }
+  .pager-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* ─── RESPONSIVE ──────────────────────────────── */
+  @media (max-width: 1100px) { .stats-grid { grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 900px)  { .unit-grid { grid-template-columns: repeat(2,1fr); } }
+
+  /* ── BACK TO TOP ─────────────────────────── */
+  .back-to-top {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: var(--blue-400);
+    color: white;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(68,118,165,.45);
+    z-index: 999;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity .3s, transform .3s, background .2s;
+    font-family: inherit;
+  }
+  .back-to-top.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .back-to-top:hover {
+    background: var(--blue-600);
+    box-shadow: 0 6px 24px rgba(68,118,165,.6);
+  }
+
+  /* ── SECTION BACK-TO-TOP LINK ─────────────── */
+  .section-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--blue-300);
+    text-decoration: none;
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,.12);
+    background: rgba(255,255,255,.04);
+    transition: all .2s;
+    cursor: pointer;
+    float: right;
+    margin-top: 2px;
+  }
+  .section-back:hover {
+    background: rgba(68,118,165,.18);
+    border-color: var(--blue-400);
+    color: white;
+  }
+
+  /* ── THEME FILTER PILLS (above chart) ──────────── */
+  .theme-filter-row {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-bottom: 20px;
+  }
+  .theme-filter-pill {
+    padding: 5px 14px; border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: transparent; color: var(--blue-200);
+    font-size: 12px; font-weight: 500; cursor: pointer;
+    transition: all .2s; font-family: inherit;
+  }
+  .theme-filter-pill:hover { border-color: var(--blue-400); color: white; }
+  .theme-filter-pill.active {
+    background: var(--blue-400); border-color: var(--blue-400);
+    color: white; font-weight: 600;
+  }
+
+  /* ── BY-THEME ACCORDION SECTION ─────────────────── */
+  #by-theme-section { margin-top: 36px; }
+  .by-theme-header {
+    font-size: 13px; font-weight: 700; letter-spacing: .06em;
+    text-transform: uppercase; color: var(--blue-300);
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .by-theme-header::after {
+    content: ''; flex: 1; height: 1px;
+    background: rgba(255,255,255,.08);
+  }
+
+  .theme-accordion { display: flex; flex-direction: column; gap: 6px; }
+  .ta-item {
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 10px; overflow: hidden;
+    background: rgba(255,255,255,.02);
+  }
+  .ta-toggle {
+    width: 100%; display: flex; align-items: center;
+    gap: 12px; padding: 13px 18px;
+    background: none; border: none; cursor: pointer;
+    text-align: left; font-family: inherit;
+    transition: background .2s;
+  }
+  .ta-toggle:hover { background: rgba(255,255,255,.04); }
+  .ta-toggle.open { background: rgba(68,118,165,.12); border-bottom: 1px solid rgba(255,255,255,.07); }
+  .ta-theme-name {
+    font-size: 14px; font-weight: 600; color: white; flex: 1;
+  }
+  .ta-count {
+    font-size: 12px; font-weight: 700; color: var(--blue-300);
+    background: rgba(68,118,165,.25); padding: 2px 10px;
+    border-radius: 12px; white-space: nowrap;
+  }
+  .ta-chevron {
+    font-size: 12px; color: var(--blue-300);
+    transition: transform .25s;
+  }
+  .ta-toggle.open .ta-chevron { transform: rotate(180deg); color: var(--blue-400); }
+
+  .ta-body {
+    max-height: 0; overflow: hidden;
+    transition: max-height .35s cubic-bezier(.4,0,.2,1);
+  }
+  .ta-body.open { max-height: 2000px; }
+  .ta-table-wrap { padding: 0 0 4px; }
+  .ta-table {
+    width: 100%; border-collapse: collapse;
+    font-size: 12.5px;
+  }
+  .ta-table thead th {
+    background: rgba(255,255,255,.03);
+    padding: 9px 16px; text-align: left;
+    font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .8px;
+    color: var(--blue-300);
+    border-bottom: 1px solid rgba(255,255,255,.06);
+  }
+  .ta-table tbody tr {
+    border-bottom: 1px solid rgba(255,255,255,.04);
+    cursor: pointer; transition: background .15s;
+  }
+  .ta-table tbody tr:last-child { border-bottom: none; }
+  .ta-table tbody tr:hover { background: rgba(68,118,165,.08); }
+  .ta-table td { padding: 10px 16px; color: var(--blue-100); vertical-align: top; }
+  .ta-table .tc-num  { color: var(--blue-300); font-weight: 700; width: 32px; }
+  .ta-table .tc-client { color: var(--blue-300); font-size: 11px; }
+  .ta-table .tc-name { font-weight: 600; color: white; }
+  .ta-table .tc-unit { white-space: nowrap; }
+  .ta-table .tc-loc  { color: var(--blue-300); font-size: 11px; }
+  .ta-table .tc-yr   { color: var(--blue-300); font-size: 11px; white-space: nowrap; }
+
+  /* link all-projects to theme filter */
+  .ta-link-all {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 5px 12px; border-radius: 12px;
+    font-size: 11px; font-weight: 600;
+    background: rgba(68,118,165,.18); color: var(--blue-200);
+    border: 1px solid rgba(68,118,165,.3);
+    cursor: pointer; transition: all .2s; white-space: nowrap;
+  }
+  .ta-link-all:hover { background: var(--blue-400); color: white; border-color: var(--blue-400); }
+
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-icon">K</div>
+    <div>
+      <div class="logo-text">Kenan Foundation</div>
+      <div class="logo-sub">Asia – Project Portfolio</div>
+    </div>
+  </div>
+  <div class="sidebar-section-title">Navigation</div>
+  <a class="nav-item active" href="#overview">
+    <span class="nav-icon">📊</span> Overview
+  </a>
+ 
+  <div class="sidebar-section-title">By Unit</div>
+  <a class="nav-item" href="#edu">
+    <span class="nav-icon">🎓</span> Education (EDU)
+    <span class="nav-badge" id="badge-EDU">30</span>
+  </a>
+  <a class="nav-item" href="#Business and Economic Development">
+    <span class="nav-icon">💼</span> Business and Economic Development
+    <span class="nav-badge" id="badge-Business and Economic Development">51</span>
+  </a>
+  <a class="nav-item" href="#SII">
+    <span class="nav-icon">🤝</span> Social Impact and Innovation
+    <span class="nav-badge" id="badge-SII">36</span>
+  </a>
+  <a class="nav-item" href="#vn">
+    <span class="nav-icon">🌏</span> Vietnam (VN)
+    <span class="nav-badge" id="badge-VN">6</span>
+  </a>
+  <a class="nav-item" href="#deepsouth">
+    <span class="nav-icon">📍</span> Deep South
+    <span class="nav-badge" id="badge-DS">3</span>
+  </a>
+  <div class="sidebar-section-title">Analytics</div>
+  <a class="nav-item" href="#themes">
+    <span class="nav-icon">🏷️</span> Themes
+  </a>
+  <a class="nav-item" href="#allprojects">
+    <span class="nav-icon">📋</span> All Projects
+  </a>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+  <!-- TOP HEADER -->
+  <div class="page-header" id="top">
+    <div>
+      <div class="header-supertitle">Kenan Foundation Asia</div>
+      <h1>Three Decades of Impact: A Shared Journey for the Future</h1>
+    </div>
+    <div class="header-stats">
+      <div class="hstat"><div class="hstat-val" id="h-total">128</div><div class="hstat-lbl">Projects</div></div>
+      <div class="hstat"><div class="hstat-val" id="h-Donors">–</div><div class="hstat-lbl">Donors</div></div>
+      <div class="hstat"><div class="hstat-val" id="h-years">–</div><div class="hstat-lbl">Years Active</div></div>
+      <div class="hstat"><div class="hstat-val" id="h-countries">10+</div><div class="hstat-lbl">Countries</div></div>
+    </div>
+  </div>
+
+  <!-- ═══ OVERVIEW ═══════════════════════════════════════ -->
+  <section class="section" id="overview">
+    <div class="section-title">Overview <span class="pill">128 Projects</span></div>
+    <a class="section-back" onclick="scrollToTop()">↑ Back to Top</a>
+    <div class="section-desc">Complete portfolio across all units, themes, and geographies</div>
+    <div class="stats-grid">
+      <div class="stat-card"><span class="icon">📚</span><div class="val" id="s-edu">30</div><div class="lbl">Education (EDU)</div><div class="sub">STEM, Vocational, Health</div></div>
+      <div class="stat-card"><span class="icon">🏢</span><div class="val" id="s-Business and Economic Development">51</div><div class="lbl">Business and Economic Development </div><div class="sub">Digital, Business Dev</div></div>
+      <div class="stat-card"><span class="icon">🌱</span><div class="val" id="s-SII">36</div><div class="lbl">Social Impact and Innovation</div><div class="sub">Civic, Women, Youth</div></div>
+      <div class="stat-card"><span class="icon">🌏</span><div class="val" id="s-intl">9</div><div class="lbl">International</div><div class="sub">VN + Regional</div></div>
+    </div>
+
+    <!-- Unit Cards -->
+    <div class="unit-grid" id="unit-grid"></div>
+  </section>
+
+   <!-- ═══ EDU ════════════════════════════════════════════ -->
+  <section class="section" id="edu">
+    <div class="section-title">🎓 Education Unit (EDU) <span class="pill" id="cnt-edu"></span></div>
+    <a class="section-back" onclick="scrollToTop()">↑ Back to Top</a>
+    <div class="section-desc">STEM, Vocational Training, Health Education and Teacher Development</div>
+    <div id="table-edu"></div>
+  </section>
+
+  <!-- ═══ Business and Economic Development ════════════════════════════════════════════ -->
+  <section class="section" id="Business and Economic Development">
+    <div class="section-title">💼 Business and Economic Development Unit (Business and Economic Development) <span class="pill" id="cnt-Business and Economic Development"></span></div>
+    <a class="section-back" onclick="scrollToTop()">↑ Back to Top</a>
+    <div class="section-desc">Business and Economic Development Development, Digital Skills, Business Incubation, Women Entrepreneurs</div>
+    <div id="table-Business and Economic Development"></div>
+  </section>
+
+  <!-- ═══ SII ══════════════════════════════════════════ -->
+  <section class="section" id="SII">
+    <div class="section-title">🤝 Social Impact and Innovation Unit (SII) <span class="pill" id="cnt-SII"></span></div>
+    <a class="section-back" onclick="scrollToTop()">↑ Back to Top</a>
+    <div class="section-desc">Civic Engagement, Youth Empowerment, Community Development, Women's Rights</div>
+    <div id="table-SII"></div>
+  </section>
+
+  <!-- ═══ VN ═══════════════════════════════════════════════ -->
+  <section class="section" id="vn">
+    <div class="section-title">🌏 Vietnam (VN) <span class="pill" id="cnt-vn"></span></div>
+    <a class="section-back" onclick="scrollToTop()">↑ Back to Top</a>
+    <div class="section-desc">Projects based in or primarily serving Vietnam</div>
+    <div id="table-vn"></div>
+  </section>
+
+  <!-- ═══ DEEP SOUTH ══════════════════════════════════════ -->
+  <section class="section" id="deepsouth">
+    <div class="section-title">📍 Deep South <span class="pill" id="cnt-ds"></span></div>
+    <a class="section-back" onclick="scrollToTop()">↑ Back to Top</a>
+    <div class="section-desc">Projects focused in Thailand's three southern border provinces</div>
+    <div id="table-ds"></div>
+  </section>
+
+  <!-- ═══ THEMES ══════════════════════════════════════════ -->
+  <section class="section" id="themes">
+    <div class="section-title">🏷️ Project Themes</div>
+    <a class="section-back" onclick="scrollToTop()">↑ Back to Top</a>
+    <div class="section-desc">Distribution of projects by thematic focus area — click any bar or theme to filter All Projects</div>
+
+    <!-- theme filter pills -->
+    <div class="theme-filter-row" id="theme-filter-row"></div>
+
+    <!-- bar chart -->
+    <div class="timeline-chart-wrap theme-chart">
+      <div id="theme-bars"></div>
+    </div>
+
+    <!-- by-theme accordion -->
+    <div id="by-theme-section">
+      <div class="by-theme-header">Projects by Theme</div>
+      <div class="theme-accordion" id="theme-accordion"></div>
+    </div>
+  </section>
+
+  <!-- ═══ ALL PROJECTS ════════════════════════════════════ -->
+  <section class="section" id="allprojects">
+    <div class="section-title">📋 All Projects <span class="pill">128</span></div>
+    <a class="section-back" onclick="scrollToTop()">↑ Back to Top</a>
+    <div class="section-desc">Search and filter the complete project portfolio</div>
+    <div class="filter-bar" id="all-filter-bar">
+      <span class="filter-label">Unit:</span>
+      <button class="filter-btn active" onclick="setUnitFilter('')">All</button>
+      <button class="filter-btn" onclick="setUnitFilter('EDU')">EDU</button>
+      <button class="filter-btn" onclick="setUnitFilter('Business and Economic Development')">Business and Economic Development</button>
+      <button class="filter-btn" onclick="setUnitFilter('SII')">SII</button>
+      <button class="filter-btn" onclick="setUnitFilter('VN')">VN</button>
+      <button class="filter-btn" onclick="setUnitFilter('Deep South')">Deep South</button>
+    </div>
+    <div class="filter-bar" id="all-theme-filter-bar" style="margin-top:8px">
+      <span class="filter-label">Theme:</span>
+      <div id="all-theme-pills" style="display:flex;flex-wrap:wrap;gap:6px;"></div>
+    </div>
+    <div class="filter-bar" style="margin-top:8px">
+      <input class="search-box" id="search-box" placeholder="🔍  Search projects or Donors..." oninput="applyFilter()" style="flex:1;min-width:220px;">
+      <span id="active-theme-label" style="font-size:12px;color:var(--blue-300);display:none;margin-left:8px;"></span><button onclick="clearThemeFilter()" id="clear-theme-btn" style="display:none;margin-left:6px;padding:4px 10px;border-radius:12px;border:1px solid rgba(255,255,255,.2);background:transparent;color:var(--blue-200);font-size:11px;cursor:pointer;font-family:inherit;" onmouseover="this.style.background='rgba(68,118,165,.2)'" onmouseout="this.style.background='transparent'">✕ Clear</button>
+    </div>
+    <div id="table-all"></div>
+    <div class="pager" id="pager">
+      <div class="pager-info" id="pager-info"></div>
+      <div class="pager-btns">
+        <button class="pager-btn" id="btn-prev" onclick="changePage(-1)">← Prev</button>
+        <button class="pager-btn" id="btn-next" onclick="changePage(1)">Next →</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    <div class="modal-unit" id="m-unit"></div>
+    <div class="modal-title" id="m-title"></div>
+    <div class="modal-client" id="m-client"></div>
+    <div class="modal-meta" id="m-meta"></div>
+    <div class="modal-desc" id="m-desc"></div>
+  </div>
+</div>
+
+<script>
+const ALL_PROJECTS = [{"Client": "The Board of Investment Office (BOI)", "Project Name": "PROMOTING FOREIGN DIRECT INVESTMENT 2019", "Description": "The Promoting Foreign Direct Investment 2019 project plays an important role in driving Thailand’s economic and social development to enhance its overall competitiveness. To increase global investment in Thailand, the Thailand Board of Investment (BOI) gathers up-to-date information to promote Thailand to targeted companies, as well as organizes roadshows to build the confidence of high-level exec...", "Location": "", "Unit": "?", "Project Theme": "Business and Economic Development", "Start Year": 2019, "End Year": 2019}, {"Client": "Mercy Corps", "Project Name": "She RISE Accelerator ", "Description": "The She RISE Accelerator, implemented by Kenan Foundation Asia in partnership with Mercy Corps, empowers female entrepreneurs in Thailand, focusing on post-COVID-19 recovery. Over a year, 40 women gained valuable skills through workshops, networking events, mentoring, pitching, and business showcases. Ten grants were awarded to outstanding participants, and 70% of surveyed entrepreneurs reported a...", "Location": "", "Unit": "Deep South", "Project Theme": "Business and Economic Development", "Start Year": 2022, "End Year": 2025}, {"Client": "APEC", "Project Name": "APEC-Canada Growing Business Partnership (Phase2: 2025)", "Description": "The APEC-Canada Growing Business Partnership is a transformative initiative designed to \nempower entrepreneurs, with a strong focus on women. It aims to enhance sustainable \nbusiness practices, promote gender inclusion, and advance digital literacy. By equipping \nparticipants with essential knowledge, skills, and opportunities, the project helps \nentrepreneurs build networks, manage their business...", "Location": "", "Unit": "Business and Economic Development", "Project Theme": "Business and Economic Development", "Start Year": 2025, "End Year": 2025}, {"Client": "APEC", "Project Name": "Financing APEC Business and Economic Development Innovation Workshop: Identifying Government Policies that Promote Venture Capital Investment in APEC Economies", "Description": "Kenan, in partnership with Thailand's Office of Small and Medium Enterprise Promotion (OBusiness and Economic DevelopmentP), implemented the APEC-funded Financing APEC Business and Economic Development Innovation Workshop in Bangkok. Kenan capitalized on its proven track record of supporting the OBusiness and Economic DevelopmentP in its role as Thailand's representative and Chair of the APEC Business and Economic Development Working Group to deliver an impactful and results-oriented workshop that enhanced the unde...", "Location": "", "Unit": "Business and Economic Development", "Project Theme": "Business and Economic Development", "Start Year": "", "End Year": ""}, {"Client": "ASEAN Korea Cooperation Fund (APWINC)", "Project Name": "Enhancing Digital Economy Participant for ASEAN Women MBusiness and Economic Developments Project/ Women Entrepreneurs", "Description": "The \"Enhancing Digital Economy Participation for ASEAN Women MBusiness and Economic Developments\" (IDEAS) project empowers women-led MBusiness and Economic Developments across ASEAN’s 10 member countries to thrive in the digital economy. Led by the Asia Pacific Women’s Network Center at Sookmyung Women’s University, with support from the ASEAN-Korea Cooperation Fund, the project equips women entrepreneurs with essential skills and resources for digital tra...", "Location": "Thailand", "Unit": "Business and Economic Development", "Project Theme": "e-Business women Business and Economic Development", "Start Year": 2022, "End Year": 2026}, {"Client": "AVPN", "Project Name": "AVPN AI Opportunity Fund (AI Skills for Tomorrow) ", "Description": "AI Skills for Tomorrow’s Educators, supported by Google.org, ADB, and AVPN, and implemented by Kenan Foundation Asia, equips teachers, students, and workers in Thailand and Vietnam with essential AI skills. The two-year program (2025–2026) delivers modular training aligned with UNESCO and national AI frameworks, covering topics from AI fundamentals to responsible use and emerging trends. By piloti...", "Location": "", "Unit": "EDU", "Project Theme": "AI", "Start Year": 2025, "End Year": 2026}, {"Client": "APEC", "Project Name": "Promoting APEC Business and Economic Development Innovation through Smart IPR Policy: How Smart IPR Policies Can Encourage Business and Economic Developments’ Research and Development ", "Description": "The Kenan Institute Asia brings over 17 years of experience in promoting Small and Medium Enterprise in Asia to bear in pushing this important initiative forward. As the implementing agency of the Promoting APEC Business and Economic Development Innovation through Smart IPR Policy: How Smart IPR Policies Can Encourage Business and Economic Developments' Research and Development, Kenan capitalizes on its proven track record of supporting the Office of Small...", "Location": "", "Unit": "Business and Economic Development", "Project Theme": "Business and Economic Development", "Start Year": "", "End Year": ""}, {"Client": "Caterpillar", "Project Name": "Closing Technical Skills Gap in Vietnam 2025 / Modern Manufacturing", "Description": "The \"Closing Technical Skills Gap in Vietnam\" project has significantly progressed. During the waiting period, the team collaborated with Bac Ninh College of Industry (BCI) to conduct baseline surveys and assess the training needs of 400 students and 30 teachers in the technology and manufacturing sectors. Officially launched in October with an MoU signing ceremony, the project now provides techni...", "Location": "Bac Ninh, Vietnam", "Unit": "VN", "Project Theme": "Vocational", "Start Year": 2025, "End Year": 2025}, {"Client": "Caterpillar", "Project Name": "Preparing Technical Vocational Students for Sustainable Careers Program", "Description": "The project integrates Occupational Health, Safety, and Environment (OHSE) principles to align with Thailand’s 13th National Economic and Social Development Plan (2023–2027) and the Bio-Circular-Green (BCG) Economy Model, supporting UN SDGs (8, 9, 12). OHSE expertise equips technical students to safely navigate industrial environments, ensuring career advancement, job security, and higher competit...", "Location": "Chonburi and Rayong", "Unit": "EDU", "Project Theme": "Vocational", "Start Year": 2025, "End Year": 2026}, {"Client": "B Grimm", "Project Name": "Skills4Tech", "Description": "With funding from B.Grimm, Kenan and its partners have significantly\nimproved the skills of science, math, and technical teachers, enabling\nthem to impart crucial STEM, technical, and 21st-century skills through\nSTEM simulation, blended learning, and project-based learning methods.\nChitralada Vocational School teachers were trained in these subjects, and\nsubsequently, they rolled out learning in t...", "Location": "Chitralada Vocational School, Bangkok", "Unit": "EDU", "Project Theme": "STEM", "Start Year": 2023, "End Year": 2024}, {"Client": "Meta", "Project Name": "We Think Digital – Thailand Trainings 2025 (AI Literacy & Anti-Scam Program)", "Description": "In 2025, Kenan, in partnership with Meta and the Electronic Transactions Development Agency (ETDA), advanced the Meta Thailand Program – Anti-Scam, Digital Literacy, and Integrity Initiative by introducing a new AI Literacy module. This module focuses on responsible AI use, scam prevention, and ethical digital behavior, equipping participants with critical skills to navigate emerging technologies....", "Location": "", "Unit": "Business and Economic Development", "Project Theme": "AI", "Start Year": 2025, "End Year": 2025}, {"Client": "APEC Canada", "Project Name": "Growing Business Partnership / MBusiness and Economic Development Capacity Building & Mentoring", "Description": "The APEC-Canada Growing Business Partnership is a transformative initiative designed to \nempower entrepreneurs, with a strong focus on women. It aims to enhance sustainable \nbusiness practices, promote gender inclusion, and advance digital literacy. By equipping \nparticipants with essential knowledge, skills, and opportunities, the project helps \nentrepreneurs build networks, manage their business...", "Location": "", "Unit": "Business and Economic Development", "Project Theme": "Business and Economic Development", "Start Year": 2025, "End Year": 2026}, {"Client": "Bank for Agriculture and Agricultural Cooperatives (BAAC)", "Project Name": "Development of Agricultural Cooperatives for BAAC Customer Marketing Cooperatives (S.K.T.)", "Description": "The Agricultural Cooperatives for BAAC Customer Marketing (S.K.T.) are organizations that work in collaboration with the Bank for Agriculture and Agricultural Cooperatives (BAAC). Their primary objective is to promote the marketing of agricultural products and support farmers in effectively linking production and sales processes. These cooperatives help build confidence and a positive image for th...", "Location": "", "Unit": "Business and Economic Development", "Project Theme": "Business and Economic Development", "Start Year": 2017, "End Year": 2017}, {"Client": "Bank for Agriculture and Agricultural Cooperatives (BAAC)", "Project Name": "Digital Marketing for Smart Farmers", "Description": "The project’s objective is to provide training to develop beneficiaries’ skills in online marketing, business model canvas and adapting to changing consumer behaviors. Through this, the project will help Thai farmers all over Thailand increase the sales of their agricultural products, and ultimately enhance the quality of life and wellbeing of Thai farmers and their families. The project’s target...", "Location": "", "Unit": "Business and Economic Development", "Project Theme": "Digital", "Start Year": 2023, "End Year": 2023}, {"Client": "Bank for Agriculture and Agricultural Cooperatives (BAAC)", "Project Name": "Boost with Facebook", "Description": "• Project Overview:\n   • The Bank for Agriculture and Agricultural Cooperatives (BAAC) launched a project to enhance online marketing capacity of agricultural customers.\n   • Aim: equip new generation of farmers with knowledge, interest, and ability to use technology to increase agricultural product sales.\n   • Training used structured curricula and expert instructors, endorsed by Facebook.\n\n• Tra...", "Location": "", "Unit": "Business and Economic Development", "Project Theme": "Business and Economic Development", "Start Year": 2020, "End Year": 2021}, {"Client": "Boeing", "Project Name": "Boeing Enhanced Project–based Learning (ePBL) / Technology Enhanced Learning (TEL)", "Description": "Background\nAs technology continues to advance rapidly, students must develop a strong science, technology, engineering, and math (STEM) foundation as well as key skills (such as critical thinking, collaboration, and creativity) to succeed in the 21st century economy. The Thai education systems, however, remains glued to outdated, memorization-based learning methods that fail to prepare students fo...", "Location": "Thailand, Vietnam, Cambodia", "Unit": "EDU", "Project Theme": "STEM", "Start Year": 2010, "End Year": 2026}, {"Client": "Boeing", "Project Name": "Technology Enhanced Learning (TEL) VN", "Description": "The Boeing Technology Enhanced Learning in Vietnam 2024 Project, running from October 2023 to September 2024, implemented impactful activities to enhance STEM education. Key events included a STEM camp on November 15, 2023, engaging 280 students and 25 teachers to promote creativity and critical thinking. On July 20, 2024, 15 master teachers were empowered, followed by training for 60 school teach...", "Location": "Vietnam", "Unit": "VN", "Project Theme": "STEM", "Start Year": 2018, "End Year": 2026}, {"Client": "Boeing", "Project Name": "STEM Education Classrooms", "Description": "Since 2008, this project has advanced STEM education in Thailand by developing teachers' and students' STEM knowledge and 21st-century skills. It integrates internationally recognized curricula, active learning, and Innovation Camps. Over 1,800 educators have been trained, positively impacting more than 270,000 students through this public-private partnership.", "Location": "Samutprakarn & Nakhonnayok, Thailand", "Unit": "EDU", "Project Theme": "STEM", "Start Year": 2023, "End Year": 2023}, {"Client": "Schneider", "Project Name": "Conserve My Planet", "Description": "The Schneider Energy Project-Based Learning project, approved by Schneider Electric Global, the Schneider Electric Foundation, and Schneider Electric Vietnam, focuses on energy conservation, environmental protection, and green energy education. From September 2024 to August 2026, it integrates the \"Converse my Planet\" program to equip vocational teachers and students aged 18-20 with vital knowledg...", "Location": "Thailand", "Unit": "EDU", "Project Theme": "Environmental", "Start Year": 2025, "End Year": 2026}, {"Client": "Caterpillar", "Project Name": "CoCreating Joint Advocacy / The Long-Term Development and Sustainability of Civil Society Organisations in Thailand ", "Description": "The project applies enhanced project-based learning methodology to improve teacher capability, raise student grades, and prepare students for career opportunities.", "Location": "Thailand", "Unit": "EDU", "Project Theme": "Education", "Start Year": 2020, "End Year": 2020}, {"Client": "Caterpillar", "Project Name": "STEM in Rayong ชานนท์", "Description": "", "Location": "", "Unit": "EDU", "Project Theme": "", "Start Year": 2021, "End Year": 2022}, {"Client": "Caterpillar", "Project Name": "STEM Teacher Professional Development in Thailand", "Description": "Enhances teacher capabilities through inquiry-based science and active math learning, benefiting over 9,000 students through professional development programs", "Location": "Rayong, Thailand", "Unit": "EDU", "Project Theme": "STEM", "Start Year": 2021, "End Year": 2021}, {"Client": "Caterpillar", "Project Name": "Active Learning to Enhance Learning Performance of Thai Students", "Description": "Organized teacher professional development workshops focused on Active Learning methodologies for electricity modules, improving educational quality and teacher management practices.", "Location": "Rayong, Thailand", "Unit": "EDU", "Project Theme": "Digital", "Start Year": 2022, "End Year": 2022}, {"Client": "Caterpillar", "Project Name": "Closing the Technician Skills Gap / Modern Manufacturing", "Description": "The Closing Skills Gap Project is a capacity-building initiative engaging 330 participants, including vocational students, teachers, and technicians. It enhances technical competencies and work-readiness skills to create a career-oriented workforce aligned with industry demands. AssesBusiness and Economic Developmentnts show improved skills, confidence, and employment prospects for vocational students, alongside better interns...", "Location": "Chonburi and Rayong", "Unit": "EDU", "Project Theme": "Vocational", "Start Year": 2023, "End Year": 2024}, {"Client": "Schneider", "Project Name": "Conserve My Planet VN", "Description": "The Schneider Energy Project-Based Learning project, approved by Schneider Electric Global, the Schneider Electric Foundation, and Schneider Electric Vietnam, focuses on energy conservation, environmental protection, and green energy education. From September 2024 to August 2026, it integrates the \"Converse my Planet\" program to equip vocational teachers and students aged 18-20 with vital knowledg...", "Location": "Vietnam", "Unit": "VN", "Project Theme": "Green Skills, Environmental", "Start Year": 2025, "End Year": 2026}, {"Client": "TICA", "Project Name": "Thailand Best Practices Research", "Description": "The \"Thailand’s Best Practices Volume 2\" project aims to compile and disseminate information on Thailand's potential sectors and expert agencies, ready to exchange and transfer knowledge of Thai best practices on an international scale. It focuses on developing a mapping database, promoting international cooperation networks, and enhancing Thailand's image as a hub for sustainable development coop...", "Location": "Thailand", "Unit": "Business and Economic Development", "Project Theme": "Research", "Start Year": 2025, "End Year": 2026}, {"Client": "U.S. Department of State", "Project Name": "Mekong Youth for Ecotourism Futures (MY Futures) ", "Description": "The MUSP Youth Sustainable Futures project aims to empower 100 young leaders from across 5 Mekong Countries to lead innovative and community-based sustainable tourism initiatives and businesses by providing them with extensive capacity building, fostering youth and regional networks, providing seed-grants, and expanding their understanding of effective and innovative tools for sustainable tourism....", "Location": "Cambodia, Thailand, Vietnam, Myanmar, Laos", "Unit": "SII", "Project Theme": "Environmental", "Start Year": 2025, "End Year": 2026}, {"Client": "Chevron", "Project Name": "Chevron Inquiry-Based Classroom Reasoning for Experiential and Active Science Education Project (INCREASE)", "Description": "Chevron, Kenan, and the Institute for the Promotion of Science Teaching in Thailand (IPST) partnered in to create Chevron INCREASE, an innovative education project that reformed the way science is taught Songkhla and Nakhon Si Thammarat, Thailand. INCREASE addressed the critical need for reform in science education, which has traditionally been taught through rote memorization methods that do not...", "Location": "", "Unit": "EDU", "Project Theme": "STEM", "Start Year": 2013, "End Year": 2016}, {"Client": "Chevron", "Project Name": "Chevron Enjoy Science Project", "Description": "The Chevron Enjoy Science Project is a US$ 30 million, five-year, public-private partnership (PPP) designed to strengthen economic development and improve Thailand's competiveness by refining Science, Technology, Engineering, and Math (STEM) education and technical and vocational education and training (TVET) across the country. To achieve this goal, Kenan works through three program components, n...", "Location": "Chonburi and Rayong, Thailand", "Unit": "EDU", "Project Theme": "STEM", "Start Year": 2015, "End Year": 2020}, {"Client": "Bank for Agriculture and Agricultural Cooperatives (BAAC)", "Project Name": "BAAC Community Enterprise Creation", "Description": "In 2016, Kenan has partnered with Bank for Agriculture and Agricultural Cooperatives Community (BAAC) to strengthen community entrepreneurs' business capacity, enabling them to cultivate greater economic growth in rural communities. Kenan works with 10 communities in central Thailand that are part of the government's One-Tambon-One-Product (OTOP) program. Through OTOP, the government supports loca...", "Location": "", "Unit": "Business and Economic Development", "Project Theme": "Business and Economic Development", "Start Year": "", "End Year": ""}, {"Client": "Citi Foundation", "Project Name": "Citi Micro and Business and Economic Development Academy for Digital Youth", "Description": "The project develops partnerships and standardized training to build employability and financial life skills for low-income youth, offering internships in housekeeping and food/beverage service to prepare them for careers in hospitality.", "Location": "", "Unit": "Business and Economic Development", "Project Theme": "Vocational", "Start Year": 2021, "End Year": 2022}, {"Client": "Citi Foundation", "Project Name": "Citi Community-focused Financial Learning and Leadership", "Description": "Building financial literacy skills for community members to manage debts and savings.", "Location": "", "Unit": "Business and Economic Development", "Project Theme": "Business and Economic Development", "Start Year": 2016, "End Year": 2020}, {"Client": "Citi Foundation", "Project Name": "Citi Micro and Business and Economic Development Academy for Digital Youth", "Description": "This project, funded by Citi Foundation, aimed to equip vocational students with skills to become digital entrepreneurs and plan their careers. Over 500 students from 10 vocational colleges participated. The program included expert consultations, follow-up activities, and a pitching competition where 50 students were selected to win startup funding prizes.", "Location": "Bangkok, Thailand", "Unit": "Business and Economic Development", "Project Theme": "Business and Economic Development", "Start Year": 2022, "End Year": 2022}, {"Client": "Citi Foundation", "Project Name": "Citi Youth Employability Skills and Pathways", "Description": "Empowered 585 disadvantaged Thai youth with work readiness and 21st-century skills. Connected them to job opportunities through a job fair with 13 top organizations. Produced policy recommendations shared with government and stakeholders to improve employment pathways.", "Location": "Greater Bangkok", "Unit": "Business and Economic Development", "Project Theme": "Business and Economic Development", "Start Year": 2023, "End Year": 2023}, {"Client": "Department of Industrial Promotion (DIP)", "Project Name": "Developing Phetkasem Textile Cluster", "Description": "Kenan is using its extensive expertise in cluster development and international business to enhance the global competitiveness of the Bangkok and Samut Sakhon textile cluster. In 2016, Kenan focused on improving business operations, developing innovative products, and connecting participants to new markets. Kenan provided two rounds of training 202 Business and Economic Development owners, and conducted professional consultati...", "Location": "", "Unit": "Business and Economic Development", "Project Theme": "Business and Economic Development", "Start Year": "", "End Year": ""}, {"Client": "Department of Industrial Promotion (DIP)", "Project Name": "Department of Industrial Promotion Research and Networking Project", "Description": "In order to create a more dynamic agri-business value chain in Thailand, the Department of Industrial Promotion (DIP) joined Kenan to conduct a research study on the field’s potential and provide network building services. Kenan analyzed five agro-based industries and products, including: palm oil, coBusiness and Economic Developmenttics, cassava, herbs, and organic farming. Based on the findings, Kenan recommended methods for...", "Location": "Thailand", "Unit": "Business and Economic Development", "Project Theme": "Research", "Start Year": 2015, "End Year": 2015}, {"Client": "Department of Trade Negotiation, Ministry of Commerce", "Project Name": "ASEAN Economic Community Project", "Description": "The ASEAN Economic Community (AEC) project, initiated by the Department of Trade Negotiation, Ministry of Commerce, and managed by Kenan with the cooperation of the Industrial Estate Authority of Thailand (IEAT), provided knowledge and created an understanding of the ASEAN Economic Community in Thailand, scheduled to be established by 2015. The project's main mission was to organize eight seminars...", "Location": "", "Unit": "Business and Economic Development", "Project Theme": "Business and Economic Development", "Start Year": "", "End Year": ""}, {"Client": "European Commission", "Project Name": "EU Business and Economic Development FTA Enhancement Program", "Description": "Kenan Institute Asia researched the potential impacts of the Thailand-EU Free Trade Agreement (FTA) on Business and Economic Developments, aiming to promote business and civil society dialogue. A seminar gathered input from academia, industry associations, and Business and Economic Developments, and policy recommendations were made to improve trade between Thailand and the EU.", "Location": "", "Unit": "Business and Economic Development", "Project Theme": "Business and Economic Development", "Start Year": 2009, "End Year": 2010}, {"Client": "Diageo Moët Hennessy (Thailand)", "Project Name": "Diageo Empowering Women through Learning", "Description": "The project aimed to empower over 6,500 female hospitality workers in Thailand and Vietnam by developing their workplace and interpersonal skills. It provided training on teamwork, problem-solving, communication, and sexual harasBusiness and Economic Developmentnt awareness, improving career development opportunities.", "Location": "Thailand", "Unit": "SII", "Project Theme": "Civic Engagement", "Start Year": 2013, "End Year": 2016}, {"Client": "Diageo Moët Hennessy (Thailand)", "Project Name": "Learning for Life Enhancement Project", "Description": "This project provides free business and hospitality skill courses to 1,700 students, graduates, hospitality workers, and unemployed persons affected by COVID-19. It focuses on technical, digital, and job readiness skills to strengthen the post-COVID hospitality sector.\n\nIn its second year, the Learning for Life Enhancement project collaborates with over 20 stakeholders and engages more than 2,100...", "Location": "", "Unit": "Business and Economic Development", "Project Theme": "Employability", "Start Year": 2022, "End Year": 2025}, {"Client": "UNICEF", "Project Name": "Development of Guidance on Youth Participation in Local Governance in Thailand / Youth & Local Governance Guidelines", "Description": "Development of Guidance on Youth Participation in Local Governance in Thailand (2025) – UNICEF, in partnership with Kenan Foundation Asia, is creating a practical tool to help local governments engage youth meaningfully in decision-making. The project combines literature reviews, FGDs and KIIs with ministries, LAOs, youth councils, and civil society, and produces a comprehensive Guidance (English...", "Location": "", "Unit": "SII", "Project Theme": "Civic Engagement", "Start Year": 2025, "End Year": 2025}, {"Client": "European Commission", "Project Name": "EU - Thailand Business and Economic Development Free Trade Enhancement Study", "Description": "A 16-month research and communication project to assess the possible impacts in Thailand of the proposed Thailand-EU free trade agreement (FTA) and to provide a factual basis for the public, business and government to discuss ways to mitigate any adverse impacts.", "Location": "", "Unit": "Business and Economic Development", "Project Theme": "Business and Economic Development", "Start Year": "", "End Year": ""}, {"Client": "Export-Import Bank of Thailand (EXIM Bank)", "Project Name": "Strengthening Vulnerable Women Entrepreneurs Program", "Description": "A joint initiative to empower 100 vulnerable women, including inmates and community members. The program builds entrepreneurial skills for product development and e-commerce, enhancing self-reliance and aiding reintegration into society.", "Location": "Greater Bangkok", "Unit": "Business and Economic Development", "Project Theme": "Business and Economic Development", "Start Year": 2023, "End Year": 2023}, {"Client": "Microsoft", "Project Name": "BETTER and E-BETTER", "Description": "Funded by Microsoft and implemented by Kenan and the Thai Department of Skills Development, the Building Employability through Technology and Business and Economic Development Resources project (BETTER) proved to be an integral part of Thailand's strategy to modernize its workforce and ensure its employability targeting disadvantaged low-income workers who were affected by the financial crisis in 2008. The Embeddi...", "Location": "", "Unit": "Business and Economic Development", "Project Theme": "Business and Economic Development", "Start Year": 2009, "End Year": 2013}, {"Client": "FHI 360 and USAID", "Project Name": "Strengthening Youth Participation in Regional Peacebuilding (Network for Peace)", "Description": "Kenan Foundation Asia, in collaboration with the Center for Social Integrity (CSI) and Sri Lanka Unites (SLU), implemented a project to empower 70 Youth Champions (YCs) from Myanmar, Sri Lanka, Thailand, Cambodia, Lao PDR, and the Tibetan community in India. The initiative fosters regional harmony and inclusivity by equipping youth with skills and resources to promote social cohesion. Activities i...", "Location": "Bangkok, Thailand", "Unit": "SII", "Project Theme": "Civic Engagement", "Start Year": 2023, "End Year": 2023}, {"Client": "UNICEF", "Project Name": "Enhancing STEM Learning to Promote Educational Equity and Equality / STEM Education / Strengthening equitable and gender-responsive STEM education", "Description": "The “Strengthening equitable and gender-responsive STEM education” project (Apr 2025 – Dec 2026) aims to improve math and science outcomes for lower secondary students in Nakhon Nayok, Prachin Buri, and Sa Kaeo. Implemented in 80 schools, it will train 160 teachers and benefit around 12,000 students, with a focus on girls and disadvantaged groups. Activities include teacher professional developmen...", "Location": "", "Unit": "EDU", "Project Theme": "Education", "Start Year": 2025, "End Year": 2026}, {"Client": "Global Fund for Malaria", "Project Name": "Malaria Education & Elimination Support", "Description": "Objective: Through funding from the Global Fund to Fight AIDS, Tuberculosis, and Malaria, Thailand’s Bureau of Vector Borne Disease (BVBD) provided Kenan with a five-year grant to combat malaria in border regions and support the nation’s ambitious goal of being malaria-free by 2024. \nActivities: Kenan utilized an innovative participatory malaria education by integrating malaria knowledge with stan...", "Location": "", "Unit": "EDU", "Project Theme": "Health", "Start Year": 2012, "End Year": 2016}, {"Client": "IBM", "Project Name": "IBM Thai Teachers TryScience", "Description": "Empowering teachers is essential to solving Thailand's education challenges. Recognizing this need, the IBM Thai Teachers TryScience (TTS) project equips teachers with the knowledge and resources to create dynamic environments that promote high-level STEM learning. Thai TTS project introduces IBM's STEM-related, technology-based education resources into middle schools in Bangkok and Samut Prakarn...", "Location": "", "Unit": "EDU", "Project Theme": "STEM", "Start Year": 2015, "End Year": 2016}, {"Client": "IVL", "Project Name": "STEM Teacher Sponsorship Program - IVL Foundation", "Description": "", "Location": "Rayong, Thailand", "Unit": "EDU", "Project Theme": "STEM", "Start Year": 2021, "End Year": 2021}, {"Client": "IVL", "Project Name": "21st Century Education", "Description": "Enhanced science education in partnership with the Ministry of Education, focusing on STEM education and providing an Innovation Camp for 50 students in Rayong.", "Location": "Rayong, Thailand", "Unit": "EDU", "Project Theme": "STEM", "Start Year": 2022, "End Year": 2022}, {"Client": "J.P. Morgan", "Project Name": "Women in STEM", "Description": "Kenan supports female students’ participation in technical-vocational education and training (TVET) to advance Thailand’s 4.0 policy and address the under-representation of women in STEM. Backed by JPMorgan Chase, this two-year initiative empowers 365 female TVET students with workplace competencies for effective employment transitions. It enhances coaching and mentoring for teachers at 17 technic...", "Location": "Central and Eastern Thailand", "Unit": "EDU", "Project Theme": "STEM", "Start Year": 2022, "End Year": 2024}, {"Client": "JustJobs Network", "Project Name": "Platformized Home-based Work for Women / Empowering Women in the Gig Economy", "Description": "Research shows that whether by choice, or by compulsion in the face of restrictive social norms, women in the Global South often work from home. At the same time, the platform economy—specifically labor platforms, online marketplaces, and social media—is creating new work and Business and Economic Development opportunities for women that are both home-based and seemingly offer high levels of flexibility. As platfo...", "Location": "Thailand, Cambodia", "Unit": "SII", "Project Theme": "Civic Engagement", "Start Year": 2020, "End Year": 2023}, {"Client": "JustJobs Network", "Project Name": "Gender, AI, and Skill Development in Southeast Asia", "Description": "Explores the impact of technology on women in the workforce. It involves research on gender, AI, and digital skills, analyzing trends in Southeast Asia's labor market, and provides policy recommendations to enhance women's workforce readiness.\n\nThis research aimed to understand how advancements in artificial intelligence (AI) and broader technology trends are reshaping the labor markets of Southea...", "Location": "Thailand, Cambodia", "Unit": "SII", "Project Theme": "Digital", "Start Year": 2023, "End Year": 2023}, {"Client": "US Embassy Bangkok", "Project Name": "YSEALI FutureMakers", "Description": "The YSEALI AI FutureMarkers workshop aims to empower 60 young leaders from across ASEAN and Timor-Leste with knowledge, skills and tools to harness the transformative potential of AI for building sustainable, inclusive and equitable communities across Southeast Asia. The program will include in-person and virtual learning sessions from experts, interactive discussions, and hands-on activities to e...", "Location": "", "Unit": "SII", "Project Theme": "AI", "Start Year": 2025, "End Year": 2025}, {"Client": "Ministry of Industry, Thailand", "Project Name": "ASEAN Business and Economic Development Regional Development Fund", "Description": "The establishment of an ASEAN Business and Economic Development Regional Development Fund as the capital source for the Business and Economic Developments in the region was initiated at the 1st Summit Conference of Business and Economic Development Development and Investment in East Asia, held in Beijing, the People's Republic of China. Thailand was assigned by ASEAN to implement this project and selected Kenan as the contractor. The project included: 1) To study and collect the data o...", "Location": "", "Unit": "Business and Economic Development", "Project Theme": "Business and Economic Development", "Start Year": "", "End Year": ""}, {"Client": "Citi Foundation", "Project Name": "Empowering Thai Youth: AI Enhances Employability from Class to Career Program", "Description": "The “Empowering Thai Youth: AI Enhances Employability from Class to Career” program equips vocational students in Nakhon Ratchasima, Chonburi, and Lopburi with AI-driven employability skills, soft skills, and job readiness training. Partnering with Microsoft, META, AWS, Google, OVEC, and the Thai Ministry of Education, the program offers personalized learning paths, workplace simulations, internsh...", "Location": "", "Unit": "EDU", "Project Theme": "", "Start Year": 2025, "End Year": 2027}, {"Client": "Meta", "Project Name": "Meta Boost - An Inclusive Digital Capacity Building Program for Thai MBusiness and Economic Developments", "Description": "Since 2019, Kenan has implemented the Boost with Facebook providing a training program to empower individuals, including those from marginalized communities (including LGBTI, people with disabilities, ethnic minorities and women), with the skills needed to build successful small businesses in the modern, digital economy. Kenan is the only organization certified by Facebook to deliver the curriculu...", "Location": "", "Unit": "Business and Economic Development", "Project Theme": "Digital", "Start Year": 2019, "End Year": 2023}, {"Client": "Meta", "Project Name": "Meta - We Think Digital", "Description": "In 2019, Over 500 million people joined the online community for the first time, a figure that rises every day. Concurrently, the Internet has allowed for a flood of information never before seen in human history. For individuals to become responsible digital citizens who protect their privacy, assess sources of information, and engage positively with others, they need to possess strong 21st-centu...", "Location": "", "Unit": "Business and Economic Development", "Project Theme": "Digital", "Start Year": 2020, "End Year": 2025}, {"Client": "ASEAN Foundation", "Project Name": "AI for MBusiness and Economic Development Advancement in ASEAN (AIM ASEAN)", "Description": "Objective: To accelerate AI adoption among Southeast Asia’s Micro, Small, and Medium Enterprises (MBusiness and Economic Developments).\n\nApproach:\nEquip MBusiness and Economic Development business owners with essential AI skills.\n\nFoster regional collaboration to build a sustainable AI training ecosystem.\n\nEnhance efficiency, competitiveness, and resilience of MBusiness and Economic Developments through AI integration.\n\nScope: Activities include localization of training modules, delive...", "Location": "", "Unit": "Business and Economic Development", "Project Theme": "AI", "Start Year": 2025, "End Year": 2027}, {"Client": "ASEAN Secretariat and Ministry of Industry, Thailand", "Project Name": "ASEAN Business and Economic Development Regional Development Fund", "Description": "Project activities included studying and collecting the data of the operation and the conditions of the utilization of Business and Economic Development Regional Development Fund in various regions of the world in order to specify problems, obstacles and conditions concerning the selection of the agencies that will be granted benefits and the duration of the Fund, collecting data from the agencies / experts that are involved a...", "Location": "ASEAN Countries", "Unit": "Business and Economic Development", "Project Theme": "Business and Economic Development", "Start Year": 2024, "End Year": 2026}, {"Client": "Microsoft", "Project Name": "Microsoft TechSperts", "Description": "In Vietnam, there is a significant gap between the skills and abilities of vocational students and the needs of the technology retail workforce, severely diminishing youth employment prospects. To address these gaps, the Microsoft TechSperts project builds the capacity of vocational school students, developing the skills and knowledge necessary for them to start a successful technology retail care...", "Location": "", "Unit": "EDU", "Project Theme": "Vocational", "Start Year": 2015, "End Year": 2016}, {"Client": "Coca Cola (Thailand) Limited ", "Project Name": "Harvest Hope: Sustainable Farmers in TH", "Description": "", "Location": "", "Unit": "SII", "Project Theme": "Argriculture", "Start Year": 2025, "End Year": 2027}, {"Client": "Office of Small Medium Enterprise Promotion (OBusiness and Economic DevelopmentP)", "Project Name": "APEC 2022 Workshop - Ready for the ‘Next Normal’: How MBusiness and Economic Developments should Adapt to an Evolving Market Landscape", "Description": "In collaboration with the APEC Business and Economic Development Working Group and Thailand's Office of Business and Economic Developments Promotion (OBusiness and Economic DevelopmentP), Kenan conducted a 2-day workshop for 169 MBusiness and Economic Developments and entrepreneurs. The workshop emphasized multi-sector solutions to help MBusiness and Economic Developments adapt to the post-pandemic market landscape, focusing on boundary-spanning strategies to ensure sustainability.", "Location": "Phuket, Thailand", "Unit": "Business and Economic Development", "Project Theme": "Business and Economic Development", "Start Year": 2022, "End Year": ""}, {"Client": "Business and Economic Development D Bank", "Project Name": "Strengthening Women Owned Business to Global Supply Chain", "Description": "This project addresses gender disparities in the global economy, empowering women entrepreneurs with skills in financial management, marketing, and digital literacy. Activities include business plan writing, pitching, consulting, and business matching.", "Location": "Greater Bangkok", "Unit": "Business and Economic Development", "Project Theme": "Business and Economic Development", "Start Year": 2023, "End Year": 2023}, {"Client": "Thailand Department of Industrial Promotion", "Project Name": "New Entrepreneurs Creation", "Description": "Launched in January 2006, this project has been extended on a yearly basis with funding provided by the Thailand Department of Industrial Promotion. The training project is designed to strengthen business management skills for aspiring entrepreneurs and teach essential business management skills in accounting, marketing, business plan writing and other fundamental areas. The training enables new e...", "Location": "", "Unit": "Business and Economic Development", "Project Theme": "Business and Economic Development", "Start Year": 2006, "End Year": 2015}, {"Client": "Organon", "Project Name": "Smart Family Planning in Action", "Description": "The Smart Family Life Planning in Action project (2023-2025) addresses Thailand’s low birth rates and high unintended pregnancies by empowering vulnerable women in the Eastern Economic Corridor (EEC) area, Samut Prakan, and Samut Sakorn. It trains 2,400 female factory workers and migrants, 60 change agents, and reaches 10,000 community members. At the national level, it fosters stakeholder engagem...", "Location": "Central Thailand", "Unit": "SII", "Project Theme": "Health", "Start Year": 2023, "End Year": 2025}, {"Client": "Pfizer Foundation", "Project Name": "Pfizer Healthy Aging Society", "Description": "Objective: Establish a preventative and alternative holistic health care approach for pre-seniors and seniors that will lead to quality aging. \nActivities: Working in collaboration with the Bureau of Empowerment for Older pErsons and the Regional Office of Prevention and Disease Control, Kenan provides capacity building training for healthcare providers and community based organizations to promote...", "Location": "", "Unit": "SII", "Project Theme": "Health", "Start Year": 2016, "End Year": 2019}, {"Client": "PTTGC", "Project Name": "Nurturing the Circular Economy Community with PTT Global Chemical", "Description": "This project enhances community recycling centers in Rayong province. It involves capacity building, engaging youth, professors, and leaders to improve recycling hubs and develop sustainable business models for waste management. These models are replicable in other communities.", "Location": "Rayong", "Unit": "Business and Economic Development", "Project Theme": "Environmental", "Start Year": 2023, "End Year": 2023}, {"Client": "AWS", "Project Name": "Empowering STEM Education Through Project-Based Learning and AI Technologies to Promote Green Communities", "Description": "This one-year project introduces Enhanced Project-Based Learning (ePBL) and AI integration to improve STEM teaching and learning in 12 schools, targeting 24 teachers and 1,800 Grade 9 students.\n\nKey activities include teacher PD workshops, mentoring through PLCs, provision of STEM materials and kits, and a teacher conference to share lessons learned. Students apply STEM skills to community environ...", "Location": "", "Unit": "EDU", "Project Theme": "STEM", "Start Year": 2024, "End Year": 2025}, {"Client": "B Grimm", "Project Name": "Skills4Tech II", "Description": "The Skills4Tech II project, a collaboration between B.Grimm Power, Chitralada Technology Institute, Kenan Institute Asia, and STEM Sims, LLC, focuses on enhancing STEM education for vocational students in Thailand during 2023-2024. Targeting Chitralada Technology Institute and technical colleges in Chonburi and Sattahip, the initiative emphasizes inquiry-based learning, technology integration, and...", "Location": "bangkok and Chonburi", "Unit": "EDU", "Project Theme": "STEM", "Start Year": 2024, "End Year": 2024}, {"Client": "British Embassy", "Project Name": "CoCreating Joint Advocacy / The Long-Term Development and Sustainability of Civil Society Organisations in Thailand ", "Description": "The project engaged 25 Thai Civil Society Organizations (CSOs) across diverse fields, including child rights, education, environmental protection, human rights, gender equality, and health. It highlighted the importance of strategic planning, digital transformation, and collaboration to enhance CSO sustainability and impact. By addressing these critical areas, the project supports CSOs in overcomi...", "Location": "Central Thailand", "Unit": "SII", "Project Theme": "Civic Engagement", "Start Year": 2024, "End Year": 2024}, {"Client": "Thailand Office of Small and Medium Enterprise Promotion (OBusiness and Economic DevelopmentP)", "Project Name": "APEC Business and Economic Development Chairmanship (Phase I and II)", "Description": "Kenan Institute Asia supported OBusiness and Economic DevelopmentP during its chairmanship of the APEC Business and Economic DevelopmentWG, providing research, document preparation, and secretarial support at meetings. Key contributions included work plans, reports, and the creation of the APEC Business and Economic Development Monitoring Index. Additionally, Kenan provided translation services and research assistance to enhance OBusiness and Economic DevelopmentP’s role.\n\nOBusiness and Economic DevelopmentP engaged Kenan to assist it during it...", "Location": "", "Unit": "Business and Economic Development", "Project Theme": "Business and Economic Development", "Start Year": 2012, "End Year": 2014}, {"Client": "Solidaridad Network Asia Limited (SNAL)", "Project Name": "Baseline and Needs AssesBusiness and Economic Developmentnt of the\nfinance, A2F and capacity for financial management of\npineapple farmers​", "Description": "Kenan, in partnership with Solidaridad Network Asia Limited (SNAL) and Dole Thailand, conducted a baseline and needs assesBusiness and Economic Developmentnt of pineapple farmers in Huahin, Bang Saphan, and Rayong. The study focused on farmers’ financial capacity, access to finance, financial behavior, and farm management practices, with the aim of understanding how these factors affect their overall financial well-being. Kena...", "Location": "", "Unit": "Business and Economic Development", "Project Theme": "Research", "Start Year": 2022, "End Year": 2022}, {"Client": "Sumitomo Corporation Thailand Ltd.", "Project Name": "STEM Teacher Sponsorship Program", "Description": "Provides math teachers training to teach Active Math and problem-solving techniques, reaching 4,500 students", "Location": "Ang Thong", "Unit": "EDU", "Project Theme": "STEM", "Start Year": 2021, "End Year": 2022}, {"Client": "Sumitomo Corporation Thailand Ltd.", "Project Name": "100Seeds: Light up - Enhanced Project-Based Learning", "Description": "This project builds on the success of enhancing mathematics teachers' capacity in grades 7-9. It introduces the \"Enhanced Project-Based Learning (ePBL)\" approach to grades 4-6, training 53 primary teachers across 52 schools to benefit over 3,000 students.", "Location": "Ang Thong", "Unit": "EDU", "Project Theme": "STEM", "Start Year": 2023, "End Year": 2025}, {"Client": "Caterpillar", "Project Name": "Closing Technical Skills Gap in Vietnam 2024 / Modern Manufacturing", "Description": "The \"Closing Technical Skills Gap in Vietnam\" project has significantly progressed. During the waiting period, the team collaborated with Bac Ninh College of Industry (BCI) to conduct baseline surveys and assess the training needs of 400 students and 30 teachers in the technology and manufacturing sectors. Officially launched in October with an MoU signing ceremony, the project now provides techni...", "Location": "Bac Ninh, Vietnam", "Unit": "VN", "Project Theme": "Vocational", "Start Year": 2024, "End Year": 2024}, {"Client": "Deloitte", "Project Name": "USAID PLUS Project: Empowering Environmental Defenders/ Capacity Development Project for Civil Society Organizations and Environmental Defenders (Green Guardians)", "Description": "The Green Guardians Project, led by Kenan Foundation Asia with USAID funding, empowered 41 Thai environmental defenders to tackle pollution and waste management issues. The project focused on enhancing understanding of environmental legal frameworks, developing organizational and advocacy skills, and strengthening local and national networks for collaboration. Participants gained practical tools a...", "Location": "North, South and Eastern part of Thailand", "Unit": "SII", "Project Theme": "Environmental", "Start Year": 2024, "End Year": 2025}, {"Client": "Thailand Office of Small and Medium Enterprise Promotion (OBusiness and Economic DevelopmentP)", "Project Name": "Born Global Business Model", "Description": "The development of global supply chains, social media, and e-commerce platforms has made it possible for small businesses to compete in international markets. However, start-up founders and small business owners must acquire the technical know-how and business skills necessary to enter the highly competitive global marketplace. The Thai government, moreover, has made helping small businesses becom...", "Location": "", "Unit": "Business and Economic Development", "Project Theme": "Business and Economic Development", "Start Year": 2018, "End Year": 2019}, {"Client": "Thailand Office of Small and Medium Enterprise Promotion (OBusiness and Economic DevelopmentP)", "Project Name": "Next Normal Situation Analyses: A Study of COVID-19-induced Global Changes in Preparation for the 2022 APEC Business and Economic Development Meetings", "Description": "The global pandemic of novel coronavirus (COVID-19) has created an unprecedented crisis that has had a profound impact on societies and economies worldwide. As the world gradually recovers from the pandemic, an understanding of the likely 'Next Normal' will help governments and businesses navigate towards the post-COVID future. This matter will also be the focus of the 2022 APEC Summit wherein Tha...", "Location": "", "Unit": "Business and Economic Development", "Project Theme": "Business and Economic Development", "Start Year": 2021, "End Year": 2021}, {"Client": "The Japan-ASEAN Integration Fund (JAIF)", "Project Name": "Enhancing Competitiveness of ASEAN Business and Economic Developments through Cluster Development and International Quality Standard Adherence / ASEAN Wellness Study Phase I", "Description": "Kenan led a research and policy recommendations project, focused on the current trends, capabilities, and competitiveness of ASEAN Business and Economic Developments. The project provides strategic recommendations to policymakers on how to mobilize Business and Economic Development clusters, and how to promote qualify standards to Business and Economic Development owners and managers, so as to build stronger and more productive Business and Economic Developments in the ASEAN region. Policy outreach public informati...", "Location": "ASEAN Countries", "Unit": "Business and Economic Development", "Project Theme": "Business and Economic Development", "Start Year": 2018, "End Year": 2019}, {"Client": "Mercy Corps", "Project Name": "She RISE Empower South ", "Description": "She RISE 3: Empower South is the third phase of an ongoing initiative that supports low-income women entrepreneurs in Thailand’s Deep South—a region affected by longstanding conflict and economic challenges. Building on lessons from previous phases, the project provides hands-on business training, skills development tailored to local market needs, and post-grant mentorship. It also helps participa...", "Location": "", "Unit": "Business and Economic Development", "Project Theme": "Business and Economic Development", "Start Year": 2024, "End Year": ""}, {"Client": "UN Women", "Project Name": "WeEmpowerAsia", "Description": "As part of the EU and UN Women's regional program, WeEmpowerAsia has been implemented in seven countries across Asia. Thailand has made significant strides in terms of gender parity across different business sectors, yet inequalities persist hampering economic growth and women's full participation in economic life. 86% of companies have one or more women in senior management positions, and 33% hav...", "Location": "Thailand", "Unit": "Business and Economic Development", "Project Theme": "Business and Economic Development", "Start Year": 2020, "End Year": 2022}, {"Client": "UNDP", "Project Name": "We are Able - Financial Literacy for Young People with Disabilities", "Description": "In collaboration with UNDP-Citi Foundation, this project trained 135 young people with disabilities in personal financial management to equip them with business and life skills for a better future.", "Location": "Greater Bangkok", "Unit": "Business and Economic Development", "Project Theme": "Business and Economic Development", "Start Year": 2023, "End Year": 2023}, {"Client": "TCG", "Project Name": "Empowering silver generation for sustainable growth", "Description": "Thailand’s transition to a fully aged society by 2030 brings challenges like inadequate retirement savings, labor shortages, and increased health expenditures. However, the elderly population holds untapped potential for Business and Economic Development. The \"Empowering Silver Generation for Sustainable Growth\" project, a collaboration between the Thai Credit Guarantee Corporation (TCG) and Kenan Foundation Asia,...", "Location": "", "Unit": "Business and Economic Development", "Project Theme": "Business and Economic Development", "Start Year": 2024, "End Year": 2025}, {"Client": "The Thai Department of Foreign Trade (FTA Fund)", "Project Name": "Beef Competitiveness Enhancement Project (Phase I–II) ", "Description": "The Beef Competitiveness Enhancement Project was a two phase project sponsored by Thailand’s Department of Foreign Trade, Ministry of Commerce, under the Free Trade Agreement (FTA) Fund.\n\nImplemented by Kenan Foundation Asia, the first phase of the project enhanced the competitiveness of beef feedlot farmer cooperatives in Sakon Nakhon, Nakhon Pathom, Mukdahan, and Sa Kaeo provinces through cluste...", "Location": "Thailand: Sakon Nakhon, Nakhon Pathom, Mukdahan (and other hubs noted across phases)", "Unit": "Business and Economic Development", "Project Theme": "Vocational", "Start Year": 2008, "End Year": 2011}, {"Client": "FHI360", "Project Name": "N4P FY22-24", "Description": "", "Location": "Thailand, Myanmar, Tibet, Laos, Sri Lanka", "Unit": "SII", "Project Theme": "Civic Engagement", "Start Year": 2024, "End Year": 2024}, {"Client": "U.S. Department of State", "Project Name": "Vietnam Women Improving Lives and Leadership (Vietnam WILL)", "Description": "The Vietnam-WILL project is an innovative, integrated approach to building the capacity of CSOs and public agencies serving the needs of women in the fields of health, education, disability and economic development. WILL builds the capacity of civil society organizations to advocate on behalf of women as a means of preventing conflict between the needs of women and the state, and involve women in...", "Location": "ASEAN and Timor Leste", "Unit": "SII", "Project Theme": "Civic Engagement", "Start Year": 2014, "End Year": 2017}, {"Client": "The Japan-ASEAN Integration Fund (JAIF)", "Project Name": "Resilience, Adaptability, and Competitiveness: A Roadmap for the Health and Wellness Tourism Sector ASEAN Business and Economic Developments in a Post-Crisis Age / ASEAN Wellness Study Phase II", "Description": "The project proposes a cluster development model to support ASEAN MBusiness and Economic Developments in health and wellness tourism. It examines the pandemic's impact on consumer behavior and service delivery through supply-side and demand-side research, gap analysis, and regional consultations. The initiative will develop regional cluster roadmaps and e-learning resources to enhance MBusiness and Economic Development competitiveness and crisis preparedne...", "Location": "ASEAN Countries", "Unit": "Business and Economic Development", "Project Theme": "Business and Economic Development", "Start Year": 2024, "End Year": 2026}, {"Client": "USAID", "Project Name": "Business Support Organization Partnerships (BSOP)", "Description": "Kenan Institute Asia managed £1 million in grants to build the capacity of public officials, judges, and private professionals in Thailand and Vietnam post-Asian crisis. The BSOP model focused on governance in finance, corporate good governance, and competitiveness. It fostered 24 U.S.-Thai partnerships, facilitated 25 policy changes, and trained over 7,000 people. The project included the establi...", "Location": "", "Unit": "Business and Economic Development", "Project Theme": "Business and Economic Development", "Start Year": 1999, "End Year": 2007}, {"Client": "L'Oreal", "Project Name": "Cerave - Care for All / Skin Health Equity", "Description": "Objective: Skin diseases are prevalent in Thailand, with varying rates for conditions such as dermatitis, bacterial infections, and urticaria, influenced by the tropical climate. The shortage of medical professionals, especially in rural areas, results in long wait times and overcrowded facilities, impacting patient care. Dermatologists face challenges in raising public awareness about skin health...", "Location": "Thailand", "Unit": "SII", "Project Theme": "Health", "Start Year": 2024, "End Year": 2025}, {"Client": "USAID", "Project Name": "ASEAN Connectivity through Trade and Investment (ACTI)", "Description": "ASEAN Connectivity through Trade and Investment (ACTI) is a 5-year U.S. government assistance program supporting engagement with ASEAN. Kenan Institute Asia is responsible for the implementation of ACTI-Business and Economic Development subcomponent, focusing on the development of Business and Economic Developments, especially in Cambodia, Myanmar, Lao PDR, and Vietnam. The program includes needs assesBusiness and Economic Developmentnts, international Business and Economic Development policy meetings, training, an...", "Location": "", "Unit": "Business and Economic Development", "Project Theme": "Business and Economic Development", "Start Year": 2013, "End Year": 2018}, {"Client": "Microsoft", "Project Name": "AI Skills for the AI-Enabled Tourism Industry in Thailand ", "Description": "The \"AI Skills for AI-Enabled Tourism Industry in Thailand,\" supported by Microsoft, aims to revolutionize Thailand's tourism sector by integrating AI capabilities. Targeting 70,000 participants, including teachers, students, and small businesses, the program bridges technology and tourism through practical AI applications. By mid-2025, it seeks to enhance business efficiency, competitiveness, and...", "Location": "Thailand", "Unit": "EDU", "Project Theme": "Digital", "Start Year": 2024, "End Year": 2025}, {"Client": "USAID", "Project Name": "The ASEAN Competitiveness Enhancement (ACE) Project (renamed VALUE)", "Description": "The ASEAN Competitiveness Enhancement (ACE) Project, funded by a five year grant from USAID, is fostering greater economic integration among the Association of Southeast Asian Nations (ASEAN) by enhancing the competitiveness of selected industries and increasing intra-regional trade.  The project identifies constraints to intra-regional trade, advocates for reform, and implements solutions.  Kenan...", "Location": "", "Unit": "Business and Economic Development", "Project Theme": "Business and Economic Development", "Start Year": 2008, "End Year": 2013}, {"Client": "UN Democracy Fund (UNDEF)", "Project Name": "Lao Encouraging and Applying Democracy for Civil Society (LEAD)", "Description": "LEAD I and II have worked to increase the effectiveness of Civil Society Organizations (CSOs) in Lao PDR so that they may contribute meaningfully to Laos' development and good governance. The projects constitute the first-ever initiative to bring together CSOs and government counterparts in Lao PDR, and are the first United Nations Democracy Fund projects to be implemented in Laos. Through the pro...", "Location": "Laos ", "Unit": "SII", "Project Theme": "Civic Engagement", "Start Year": 2012, "End Year": 2016}, {"Client": "USAID/Nathan Associates", "Project Name": "ASEAN Connectivity through Trade and Investment (ACTI)", "Description": "ASEAN Connectivity through Trade and Investment (ACTI) is a 5 year U.S. government assistance program supporting increased engagement with the Association of Southeast Asian Nations (ASEAN). ACTI targets accelerated implementation of select components of the ASEAN Economic Community (AEC) Blueprint and the ASEAN-U.S. Trade and Investment Framework Arrangement, the ASEAN-U.S. Enhanced Economic Enga...", "Location": "", "Unit": "Business and Economic Development", "Project Theme": "Business and Economic Development", "Start Year": 2013, "End Year": 2018}, {"Client": "MSD", "Project Name": "Adolescent Girls Health / Inno-Health Clubs: Girl-led solutions for improved healthcare access and outcomes in underserved, low-income communities. ", "Description": "The Inno-Health Clubs project empowers 240 adolescent girls to make informed health decisions and access healthcare while contributing to community well-being. It builds the capacities of 60 change agents, including teachers, health workers, and medical professionals, to mentor youth in creating innovative health solutions. Through multi-stakeholder collaboration, the project promotes adolescent g...", "Location": "Bangkok, Thailand", "Unit": "SII", "Project Theme": "Health", "Start Year": 2024, "End Year": 2026}, {"Client": "VISA Foundation and Mercy Corp", "Project Name": "She Rise: Engaging Women Entrepreneurs in Thailand Impacted by COVID-19", "Description": "This project supported 350 women affected by COVID-19, including those who lost hospitality jobs, recent graduates from vocational colleges, and entrepreneurs needing marketing and financial management skills. By utilizing MBusiness and Economic Development Academy and resources from digital partners, it developed a virtual platform for capacity building to enhance business skills, address gender barriers, and improve access t...", "Location": "Thailand", "Unit": "Business and Economic Development", "Project Theme": "Business and Economic Development", "Start Year": 2022, "End Year": 2025}, {"Client": "UNDP, Vietnam Chamber of Commerce and Industry", "Project Name": "Embedding Corporate Social Responsibility in Vietnam through Research, Training and Curriculum Development", "Description": "As a component of the Global Compact Network Vietnam (GCNV), the Embedding Corporate Social Responsibility in Vietnam through Research, Training and Curriculum Development ('Embedding CSR') designed, developed and piloted responsible management education, or corporate social responsibility (CSR), curriculum. Embedding CSR began the process of instilling CSR in Vietnamese universities through cur...", "Location": "Vietnam", "Unit": "SII", "Project Theme": "Civic Engagement", "Start Year": 2009, "End Year": 2010}, {"Client": "Rochester Institute of Technology", "Project Name": "E-Waste Surveys", "Description": "The Rochester Institute of Technology has generously funded a project with 360,920 THB to address e-waste challenges in Southeast Asia. This project will run from June to December 2024, focusing on the participation of 27 informal e-waste stakeholders across Thailand, Vietnam, and Indonesia. The initiative will explore and implement sustainable solutions for e-waste management within these communi...", "Location": "Thailand, Vietnam, and Indonesia", "Unit": "Business and Economic Development", "Project Theme": "Environmental", "Start Year": 2024, "End Year": 2024}, {"Client": "UNICEF", "Project Name": "Understanding the Data Challenge in Education in Thailand / UNICEF EDUCATION RESEARCH 2023", "Description": "This research investigates data challenges in Thailand's school system, collecting insights from policy planners, Ministry of Education data users, and database managers. Findings were used to develop and submit policy recommendations for implementation.", "Location": "Thailand", "Unit": "EDU", "Project Theme": "STEM", "Start Year": 2023, "End Year": 2023}, {"Client": "Visa Foundation through Mercy Corps", "Project Name": "SheRise - COVID-19 Recovery for Small and Micro Businesses", "Description": "MBusiness and Economic Developments have been particularly hard hit by the pandemic with mass layoffs, reduced business operations, disruption in supply chains and reduced demand for services. Women-led MBusiness and Economic Developments traditionally have less access to financial services and lower business capacity across the region and thus have experienced greater vulnerability over the past year. Compounding and contributing to the economic impacts o...", "Location": "", "Unit": "Business and Economic Development", "Project Theme": "Business and Economic Development", "Start Year": 2021, "End Year": 2022}, {"Client": "Tetra Tech", "Project Name": "USAID Enhance Activity", "Description": "The project aims to support the Royal Thai Government and \n\nnon-governmental stakeholders to strengthen citizen-centric local governance in Thailand. The project also empowers citizens to voice their concerns constructively to local administrative officials as a way to ensure their priorities are addressed and to ultimately foster inclusive and sustainable growth. ", "Location": "The Deep South, Thailand", "Unit": "SII", "Project Theme": "Civic Engagement", "Start Year": 2024, "End Year": 2027}, {"Client": "AVPN", "Project Name": "Gender Fund / AVPN - WE Inspire Incubation Hub ", "Description": "Kenan, with unrestricted funding from AVPN’s Asia Gender Equality Fund, is advancing three objectives from July 2023 to June 2026. The first is scaling up the WE Inspire program in Thailand by strengthening 10 local organizations to empower 500 more women and create lasting community impact. The second focuses on embedding Gender Equality and Social Impact and Innovation (GESI) practices into Kenan’s operatio...", "Location": "Chiang Rai, Thailand", "Unit": "SII", "Project Theme": "Business and Economic Development", "Start Year": 2023, "End Year": 2026}, {"Client": "UNICRI", "Project Name": "Preventing Violent Extremism in Thailand's Deep South Through Pencak Silat", "Description": "The project empowers youth by developing the potential of Pencak Silat, the local martial art of the Malay cultural region. Boys and girls have joined training without breaking Islamic principles, with increasing participation. It provides physical and mental benefits, increases educational opportunities, and introduces new experiences for trainees. Pencak Silat is now popular internationally.", "Location": "Pattani, Thailand", "Unit": "SII", "Project Theme": "Civic Engagement", "Start Year": 2022, "End Year": 2022}, {"Client": "US Department of State, Bureau of Democracy, Human Rights and Labor", "Project Name": "Strengthening the Awareness and Practice of International Labor Rights in Vietnam", "Description": "The SAP-ILR project in Vietnam, funded by the U.S. Department of State, strengthened awareness and practice of international labor rights across three industrial zones in Bac Ninh Province. The project engaged 8,241 participants through awareness-raising events and completed 2,532 labor standards monitoring checklists to promote better working conditions. It trained key groups including trade unio...", "Location": "Vietnam", "Unit": "SII", "Project Theme": "Civic Engagement", "Start Year": 2017, "End Year": 2019}, {"Client": "Coca Cola (Thailand) Limited ", "Project Name": "Sustainable Business with Coca-Cola Project for Female Sugarcane Growers", "Description": "The Sustainable Business with Coca-Cola Project for Female Sugarcane Growers 2017-2018 is \nsupported by Coca-Cola (Thailand) Limited, and aimed to develop the financial literacy of female sugarcane growers from Coca-Cola’s sugar supplier partners in three provinces, Phetchabun,  Uthaithani and Kanchanaburi. Thai Roong Rueng Sugar Group (TRR) and Khon Kaen Sugar  Industry PCL (KSL) are the two suga...", "Location": "", "Unit": "SII", "Project Theme": "Business and Economic Development", "Start Year": 2017, "End Year": 2018}, {"Client": "UNESCAP", "Project Name": "We Inspire top-up", "Description": "Catalyzing a Gender-Responsive Entrepreneurial Ecosystem in the Digital, Green, and Care Economies (2025–2028), funded by ESCAP (USD 15,000) with co-financing from Kenan, empowers rural women in Chiang Rai, including ethnic minorities, to build resilient livelihoods. Building on Kenan’s WE Inspire initiative (which has supported over 1,000 women), the project provides seed grants and mentorship to...", "Location": "", "Unit": "SII", "Project Theme": "Business and Economic Development", "Start Year": 2025, "End Year": 2026}, {"Client": "UNC", "Project Name": "Summer Honors 2024", "Description": "", "Location": "", "Unit": "EDU", "Project Theme": "Education", "Start Year": 2024, "End Year": 2024}, {"Client": "U.S. Department of State", "Project Name": "YSEALI Futurepreneurs: Economic Empowerment Regional Workshop", "Description": "The Young Southeast Asian Leaders Initiative (YSEALI) Economic Empowerment Regional Workshop brought together 66 youth leaders from the ASEAN region and Timor-Leste for a multi-day workshop focused on economic empowerment. Participants explored how private sector practices can foster sustainable development and shared ideas to enhance social Business and Economic Development in the region.", "Location": "Bangkok, Thailand", "Unit": "SII", "Project Theme": "Business and Economic Development", "Start Year": 2020, "End Year": 2022}, {"Client": "UNICEF", "Project Name": "Adolescent Healthy Lifestyles / Promoting Healthy Lifestyles with and for Youth in Southern Border Provinces ", "Description": "The project promotes healthy lifestyles among youth aged 15-24 in Thailand’s Southern Border provinces by increasing awareness of healthy habits and access to health services, particularly for vulnerable and out-of-school youth. It enhances the capacity of parents, caregivers, DLEC teachers, and community health workers to support youth through participatory approaches. Additionally, the initiativ...", "Location": "", "Unit": "Deep South", "Project Theme": "Health", "Start Year": 2024, "End Year": 2025}, {"Client": "US Patent and Trade Office (US PTO)", "Project Name": "Comparative AssesBusiness and Economic Developmentnt Study of Patent and Trademark Offices in Southeast Asia", "Description": "Kenan Institute Asia conducted a comparative assesBusiness and Economic Developmentnt of patent and trademark offices in Southeast Asia and China. The study aimed to provide objective, comparable information to address intellectual property rights (IPR) challenges. It involved surveys, interviews, and desk research. The study produced a detailed description of application processes and recommended measures for improving region...", "Location": "ASEAN and Timor Leste", "Unit": "SII", "Project Theme": "Civic Engagement", "Start Year": 2010, "End Year": 2011}, {"Client": "U.S. Department of State", "Project Name": "Mekong Inspiring Women Entrepreneurs (WE Inspire)", "Description": "WE Inspire is a five-year initiative that has empowered over 1,000 marginalized women entrepreneurs in the Mekong region, focusing on healthcare access, financial stability, and business growth. Targeting women in low-income, agricultural communities along the Mekong River—particularly ethnic minorities and stateless women—the project provided training in Business and Economic Development, digital literacy, and fi...", "Location": "Cambodia, Thailand, Vietnam", "Unit": "SII", "Project Theme": "Business and Economic Development", "Start Year": 2021, "End Year": 2026}, {"Client": "USAID", "Project Name": "Greater Mekong Subregion Responses to Infectious Diseases (GMS-RID)", "Description": "The Greater Mekong Subregion Responses to Infectious Diseases (GMS-RID) is strengthening effective GMS (Thailand, Cambodia, Vietnam, Southern China, Laos and Myanmar) regional, national and local responses to avian and pandemic influenza, malaria, tuberculosis and other infectious diseases.  The project brings together public health officials from each beneficiary country to promote a collaborativ...", "Location": "", "Unit": "SII", "Project Theme": "Health", "Start Year": 2009, "End Year": 2012}, {"Client": "USAID", "Project Name": "Healing, Opportunity, Peace and Engagement for Youth (HOPE) I and II", "Description": "The six-year project supports youth in Pattani and Yala to mitigate the violent conflict in the Deep South of Thailand. The project objectives are: 1) build trust between ethnic Malay and ethnic Thai communities by creating social space where people of different religious beliefs can interact naturally and discuss community needs, centered on youth and community development; 2) identify and facili...", "Location": "", "Unit": "Deep South", "Project Theme": "Civic Engagement", "Start Year": 2012, "End Year": 2018}, {"Client": "U.S. Embassy Mission in Thailand / U.S. Department of State", "Project Name": "YSEALI Enviro-Tech Regional Workshop", "Description": "A six-day event addressing climate change challenges with clean technology innovations. It gathered 60 young ASEAN and Timor-Leste leaders to design regional environmental projects, providing 12 seed grants and engaging 5,000 people in sustainability initiatives.", "Location": "ASEAN and Timor Leste", "Unit": "SII", "Project Theme": "Business and Economic Development", "Start Year": 2023, "End Year": 2024}, {"Client": "USAID", "Project Name": "Caltex Fuel Your School", "Description": "In 2014, Caltex Thailand partnered with Kenan to implement the Caltex Fuel Your School community campaign, an innovative approach to enhancing public education, endorsed by the Thailand Ministry of Education. Through the project, Caltex uses a percentage of proceeds from the sale of fuel at its stations throughout Thailand to fund activities that strengthen student skills in critical thinking, pro...", "Location": "", "Unit": "EDU", "Project Theme": "Education", "Start Year": 2014, "End Year": 2016}, {"Client": "USAID", "Project Name": "USAID Chumchon Harapan", "Description": "Since 2012, USAID and Kenan Foundation Asia have promoted social cohesion in Thailand’s Deep South through initiatives like the USAID Chumchon Harapan Activity (2018-2024). \"Chumchon Harapan,\" meaning \"Community of Hope,\" empowers secondary and university students as future leaders by fostering an understanding of cultural and religious diversity. The project supports students during critical adol...", "Location": "Thailand's Deep South, Northern, and Northeastern provinces", "Unit": "SII", "Project Theme": "Civic Engagement", "Start Year": 2018, "End Year": 2024}, {"Client": "USAID", "Project Name": "Building Capability for ICT-Enabled Learning in Laos (BCILL)", "Description": "To bridge the urban and rural education divide, the Building Capability for ICT-Enabled Learning in Laos (BCILL) project equipped rural teachers with information and communication technology (ICT) resources and knowledge. Kenan, in partnership with the Lao Ministry of Education and Sports, developed technology-based learning modules that were integrated into the existing middle school curriculum i...", "Location": "", "Unit": "EDU", "Project Theme": "Education", "Start Year": "", "End Year": ""}, {"Client": "U.S. Department of State", "Project Name": "We Inspire", "Description": "", "Location": "Chiang Rai, Thailand", "Unit": "SII", "Project Theme": "Business and Economic Development", "Start Year": 2024, "End Year": 2025}, {"Client": "USAID/Nathan Associates", "Project Name": "Maximizing Agricultural Revenue Through Knowledge, Enterprise Development, and Trade : MARKET", "Description": "Kenan provided support to Nathan Associates on their food security project, MARKET (Maximizing Agricultural Revenues through Knowledge, Enterprise Development and Trade Support) for ASEAN.\n\nThe project worked with business and farmer organizations, governments, research institutions, and non-governmental organizations to adopt better aquaculture production practices and fisheries management. An im...", "Location": "", "Unit": "Business and Economic Development", "Project Theme": "Research", "Start Year": 2012, "End Year": 2015}, {"Client": "US Mission to ASEAN", "Project Name": "YSEALI PLUS: Power of Leadership, Unleashing Success ", "Description": "YSEALI PLUS: \"Power of Leadership, Unleashing Success\" supports YSEALI alumni aged 36+ from ASEAN member states and Timor-Leste, fostering leadership, professional growth, and civic engagement. Fully funded by the U.S. Department of State, the program includes virtual sessions, a regional workshop in Phuket (February 25–29, 2024), and a mentoring initiative where participants guide other YSEALI me...", "Location": "ASEAN and Timor Leste", "Unit": "SII", "Project Theme": "Business and Economic Development", "Start Year": 2023, "End Year": 2025}, {"Client": "USAID/Tetra Tech", "Project Name": "USAID Enhance Activity", "Description": "A transformative initiative fostering citizen-centric local governance. It includes partnerships with the Royal Thai Government and Tetra Tech, focusing on innovative tools like big data for governance, aiming for inclusive, sustainable community growth from 2022 to 2027.", "Location": "Thailand's Deep South, Northern, and Northeastern provinces", "Unit": "SII", "Project Theme": "Civic Engagement", "Start Year": 2022, "End Year": 2025}, {"Client": "US Embassy Bangkok", "Project Name": "YSEALI Rangoon / YSEALI Regional Workshop: Creating Positive Online Spaces", "Description": "The 2024 YSEALI Regional Workshop: \"Creating Positive Online Spaces\" convened 58 young leaders from ASEAN and Timor-Leste, including journalists, civil society leaders, and influencers, for a three-day event addressing disinformation, hate speech, and propaganda. Participants collaborated with experts and peers to design cross-country initiatives tackling online challenges. Five regional seed gran...", "Location": "ASEAN and Timor Leste", "Unit": "SII", "Project Theme": "Business and Economic Development", "Start Year": 2024, "End Year": 2025}, {"Client": "US Mission to ASEAN", "Project Name": "YSEALI InnovatHER", "Description": "The 2025 YSEALI Women Leadership Academy (WLA): InnovatHER” is an initiative under the U.S. government’s signature program, YSEALI (Young Southeast Asian Leaders Initiative), which aims to engage and empower emerging leaders across Southeast Asia. The program aims to confront these disparities by empowering 50 to 60 young female leaders aged 20 to 35, representing all ASEAN member states and Timor...", "Location": "ASEAN and Timor Leste", "Unit": "SII", "Project Theme": "Business and Economic Development", "Start Year": 2024, "End Year": 2025}, {"Client": "US Embassy Bangkok", "Project Name": "Flourish Network - Fostering Entrepreneurial and High-Impact Female Civil Society Organization Leaders in the Deep South of Thailand (Flourish Network) ", "Description": "The Flourish Network empowers 35 female CSO leaders in Thailand's Deep South by enhancing their project management, financial management, business development, leadership, and communication skills. This initiative enables participants to tackle local challenges, lead impactful community projects, and sustain their organizations in a complex socio-political context. By fostering collaboration and s...", "Location": "Thailand's Deep South", "Unit": "SII", "Project Theme": "Civic Engagement", "Start Year": 2024, "End Year": 2025}, {"Client": "Diageo Moët Hennessy (Thailand)", "Project Name": "Learning for Life VN", "Description": "The DIAGEO Learning for Life VN 2024 project overcame early licensing challenges to successfully deliver its core activities at Hanoi Tourism College and Danang Tourism College. Training 418 students, the program focused on bartending, digital, job readiness, and 21st-century skills. A job fair in Danang connected 200 students with 19 tourism businesses, enhancing career opportunities. Participant...", "Location": "Vietnam", "Unit": "VN", "Project Theme": "Business and Economic Development", "Start Year": 2024, "End Year": 2025}, {"Client": "U.S. Department of State", "Project Name": "We Inspire VN", "Description": "", "Location": "", "Unit": "VN", "Project Theme": "Business and Economic Development", "Start Year": 2024, "End Year": 2024}, {"Client": "L'Oreal", "Project Name": "Cerave - Care for All / Skin Health Equity (Phase 2/2026)", "Description": "Objective: Skin diseases are prevalent in Thailand, with varying rates for conditions such as dermatitis, bacterial infections, and urticaria, influenced by the tropical climate. The shortage of medical professionals, especially in rural areas, results in long wait times and overcrowded facilities, impacting patient care. Dermatologists face challenges in raising public awareness about skin health...", "Location": "", "Unit": "", "Project Theme": "", "Start Year": "", "End Year": ""}];
+
+// ─── UNIT CONFIG ─────────────────────────
+const UNIT_CONFIG = {
+  'EDU':        { label: 'Education',      fullName: 'Education & STEM', emoji: '🎓', color: '#2e7bf4' },
+  'BD':        { label: 'Business and Economic Development',            fullName: 'Business and Economic Development & Business Dev', emoji: '💼', color: '#00c6fb' },
+  'SII':     { label: 'Social Impact and Innovation',   fullName: 'Social Impact and Innovation', emoji: '🤝', color: '#ffd166' },
+  'VN':         { label: 'Vietnam',        fullName: 'Vietnam Programs', emoji: '🌏', color: '#7de89d' },
+  'Deep South': { label: 'Deep South',     fullName: "Thailand's Deep South", emoji: '📍', color: '#f4a0a0' },
+};
+
+// ─── LOCATION → MAP COORDS (Thailand-centric) ─
+const LOCATION_MAP = {
+  'Bangkok':           { lat: 13.75, lng: 100.52, label: 'Bangkok' },
+  'Greater Bangkok':   { lat: 13.75, lng: 100.52, label: 'Greater Bangkok' },
+  'Chitralada Vocational School, Bangkok': { lat: 13.76, lng: 100.50, label: 'Bangkok (Chitralada)' },
+  'Bangkok, Thailand': { lat: 13.75, lng: 100.52, label: 'Bangkok' },
+  'Chonburi and Rayong': { lat: 13.35, lng: 101.10, label: 'Chonburi & Rayong (EEC)' },
+  'Chonburi and Rayong, Thailand': { lat: 13.35, lng: 101.10, label: 'Chonburi & Rayong' },
+  'Rayong': { lat: 12.68, lng: 101.28, label: 'Rayong' },
+  'Rayong, Thailand': { lat: 12.68, lng: 101.28, label: 'Rayong' },
+  'Samutprakarn & Nakhonnayok, Thailand': { lat: 13.60, lng: 101.20, label: 'Samut Prakan & Nakhon Nayok' },
+  'Central Thailand': { lat: 14.5, lng: 100.5, label: 'Central Thailand' },
+  'Central and Eastern Thailand': { lat: 14.0, lng: 101.5, label: 'Central & Eastern Thailand' },
+  'Phuket, Thailand': { lat: 7.89, lng: 98.40, label: 'Phuket' },
+  'Pattani, Thailand': { lat: 6.87, lng: 101.25, label: 'Pattani (Deep South)' },
+  'Chiang Rai, Thailand': { lat: 19.91, lng: 99.83, label: 'Chiang Rai' },
+  'Ang Thong': { lat: 14.58, lng: 100.46, label: 'Ang Thong' },
+  'Thailand\'s Deep South': { lat: 6.5, lng: 101.0, label: "Deep South" },
+  'The Deep South, Thailand': { lat: 6.5, lng: 101.0, label: "Deep South" },
+  'Thailand\'s Deep South, Northern, and Northeastern provinces': { lat: 15.0, lng: 101.5, label: "Multiple Regions" },
+  'Thailand: Sakon Nakhon, Nakhon Pathom, Mukdahan (and other hubs noted across phases)': { lat: 16.5, lng: 103.2, label: 'Northeast Thailand' },
+  'North, South and Eastern part of Thailand': { lat: 15.0, lng: 101.0, label: 'Multiple Regions' },
+  'Thailand': { lat: 15.0, lng: 101.0, label: 'Thailand (National)' },
+  'Thailand, Vietnam, Cambodia': { lat: 15.0, lng: 101.0, label: 'Thailand (Multi-country)' },
+  'Thailand, Cambodia': { lat: 14.5, lng: 102.0, label: 'Thailand & Cambodia' },
+  'Cambodia, Thailand, Vietnam, Myanmar, Laos': { lat: 15.0, lng: 101.0, label: 'Mekong Region' },
+  'Cambodia, Thailand, Vietnam': { lat: 14.0, lng: 102.0, label: 'Mekong Sub-region' },
+  'Thailand, Vietnam, and Indonesia': { lat: 15.0, lng: 101.0, label: 'Southeast Asia' },
+  'Thailand, Myanmar, Tibet, Laos, Sri Lanka': { lat: 15.0, lng: 101.0, label: 'Multi-country' },
+  'ASEAN Countries': { lat: 15.0, lng: 101.5, label: 'ASEAN Region' },
+  'bangkok and Chonburi': { lat: 13.60, lng: 100.80, label: 'Bangkok & Chonburi' },
+};
+
+// ─── INIT ─────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => {
+  updateHeaderStats();
+  buildUnitCards();
+  buildThemeBars();
+  buildUnitTables();
+  buildAllTable();
+  initMap();
+  updateNavBadges();
+});
+
+function updateHeaderStats() {
+  const Donors = new Set(ALL_PROJECTS.map(p => p.Client)).size;
+  const years = ALL_PROJECTS.flatMap(p => [p['Start Year'], p['End Year']]).filter(Boolean);
+  const minY = Math.min(...years), maxY = Math.max(...years);
+  document.getElementById('h-total').textContent = ALL_PROJECTS.length;
+  document.getElementById('h-Donors').textContent = Donors;
+  document.getElementById('h-years').textContent = minY + '–' + maxY;
+}
+
+function updateNavBadges() {
+  const counts = {};
+  ALL_PROJECTS.forEach(p => { counts[p.Unit] = (counts[p.Unit]||0)+1; });
+  document.getElementById('badge-EDU').textContent = counts['EDU']||0;
+  document.getElementById('badge-Business and Economic Development').textContent = counts['Business and Economic Development']||0;
+  document.getElementById('badge-SII').textContent = counts['SII']||0;
+  document.getElementById('badge-VN').textContent = counts['VN']||0;
+  document.getElementById('badge-DS').textContent = counts['Deep South']||0;
+}
+
+function buildUnitCards() {
+  const counts = {};
+  ALL_PROJECTS.forEach(p => { counts[p.Unit] = (counts[p.Unit]||0)+1; });
+  const total = ALL_PROJECTS.length;
+  const grid = document.getElementById('unit-grid');
+  const units = ['EDU','Business and Economic Development','SII','VN','Deep South'];
+  units.forEach(u => {
+    const cfg = UNIT_CONFIG[u] || { label: u, fullName: u, emoji: '📌', color: '#6ba3f8' };
+    const cnt = counts[u]||0;
+    const pct = Math.round(cnt/total*100);
+    grid.innerHTML += `<div class="unit-card" onclick="scrollToUnit('${u}')">
+      <div class="unit-name">${cfg.emoji} ${cfg.label}</div>
+      <div class="unit-full">${cfg.fullName}</div>
+      <div class="unit-count">${cnt}</div>
+      <div class="unit-bar"><div class="unit-bar-fill" style="width:${pct}%"></div></div>
+    </div>`;
+  });
+}
+
+function scrollToUnit(u) {
+  const map = { 'EDU':'edu','Business and Economic Development':'Business and Economic Development','SII':'SII','VN':'vn','Deep South':'deepsouth' };
+  const el = document.getElementById(map[u]);
+  if(el) el.scrollIntoView({behavior:'smooth'});
+}
+
+/* ── current theme filter state ── */
+let currentTheme = '';
+
+function buildThemeBars() {
+  const counts = {};
+  ALL_PROJECTS.forEach(p => {
+    if(p['Project Theme']&&p['Project Theme'].trim())
+      counts[p['Project Theme']] = (counts[p['Project Theme']]||0)+1;
+  });
+  const sorted = Object.entries(counts).sort((a,b)=>b[1]-a[1]);
+  const max = sorted[0][1];
+  const wrap = document.getElementById('theme-bars');
+
+  sorted.forEach(([name, cnt]) => {
+    if(!name.trim()) return;
+    const pct = Math.round(cnt/max*100);
+    wrap.innerHTML += `<div class="theme-row" style="cursor:pointer" onclick="filterByTheme('${name.replace(/'/g,"\\'")}')">
+      <div class="theme-name" style="cursor:pointer">${name}</div>
+      <div class="theme-bar-wrap">
+        <div class="theme-bar-fill" style="width:${pct}%" id="tbar-${name.replace(/\s+/g,'-')}">
+          <span class="theme-bar-val">${cnt}</span>
+        </div>
+      </div>
+    </div>`;
+  });
+
+  /* Theme filter pills above chart */
+  const pillWrap = document.getElementById('theme-filter-row');
+  const allPill = `<button class="theme-filter-pill active" id="tpill-ALL" onclick="filterByTheme('')">All Themes</button>`;
+  pillWrap.innerHTML = allPill + sorted.map(([name])=>
+    `<button class="theme-filter-pill" id="tpill-${name.replace(/\s+/g,'-')}" onclick="filterByTheme('${name.replace(/'/g,"\\'")}'">${name}</button>`
+  ).join('');
+
+  /* Theme pills on All Projects filter bar */
+  const allThemePills = document.getElementById('all-theme-pills');
+  if(allThemePills){
+    allThemePills.innerHTML = `<button class="filter-btn active" id="apill-ALL" onclick="filterByTheme('')">All</button>` +
+      sorted.map(([name])=>
+        `<button class="filter-btn" id="apill-${name.replace(/\s+/g,'-')}" onclick="filterByTheme('${name.replace(/'/g,"\\'")}'">${name}</button>`
+      ).join('');
+  }
+
+  /* Build accordion */
+  buildThemeAccordion(sorted);
+}
+
+function filterByTheme(theme) {
+  currentTheme = theme;
+  /* update pill states — chart section */
+  document.querySelectorAll('.theme-filter-pill').forEach(b => b.classList.remove('active'));
+  const activeId = theme ? 'tpill-'+theme.replace(/\s+/g,'-') : 'tpill-ALL';
+  const ap = document.getElementById(activeId);
+  if(ap) ap.classList.add('active');
+
+  /* update pill states — all-projects section */
+  document.querySelectorAll('#all-theme-pills .filter-btn').forEach(b=>b.classList.remove('active'));
+  const apId = theme ? 'apill-'+theme.replace(/\s+/g,'-') : 'apill-ALL';
+  const ap2 = document.getElementById(apId);
+  if(ap2) ap2.classList.add('active');
+
+  /* show active theme label */
+  const lbl = document.getElementById('active-theme-label');
+  if(lbl){ lbl.style.display = theme?'':'none'; lbl.textContent = '🏷️ '+theme; }
+  const cb=document.getElementById('clear-theme-btn'); if(cb) cb.style.display=theme?'':'none';
+
+  /* apply to All Projects table */
+  applyFilter();
+
+  /* if a theme was selected, scroll to All Projects */
+  if(theme){
+    setTimeout(()=>{
+      const el = document.getElementById('allprojects');
+      if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+    },80);
+  }
+}
+
+function buildThemeAccordion(sorted) {
+  const wrap = document.getElementById('theme-accordion');
+  if(!wrap) return;
+  wrap.innerHTML = '';
+  sorted.forEach(([theme, cnt]) => {
+    if(!theme.trim()) return;
+    const projects = ALL_PROJECTS.filter(p=>p['Project Theme']===theme);
+    const safeId = 'ta-'+theme.replace(/[^a-zA-Z0-9]/g,'-');
+
+    const rows = projects.map((p,i)=>{
+      const yr = (p['Start Year']&&p['End Year']) ? p['Start Year']+'–'+p['End Year'] : (p['Start Year']||p['End Year']||'–');
+      return `<tr onclick="openModal(${ALL_PROJECTS.indexOf(p)})">
+        <td class="tc-num">${i+1}</td>
+        <td class="tc-client">${p.Client||'–'}</td>
+        <td class="tc-name">${p['Project Name']||'–'}</td>
+        <td class="tc-unit"><span class="unit-badge ${p.Unit==='EDU'?'badge-EDU':p.Unit==='Business and Economic Development'?'badge-Business and Economic Development':p.Unit==='SII'?'badge-SII':p.Unit==='VN'?'badge-VN':'badge-DS'}">${p.Unit||'–'}</span></td>
+        <td class="tc-loc">${p.Location||'–'}</td>
+        <td class="tc-yr">${yr}</td>
+      </tr>`;
+    }).join('');
+
+    wrap.innerHTML += `<div class="ta-item">
+      <button class="ta-toggle" id="tatog-${safeId}" onclick="toggleThemeAccordion('${safeId}')">
+        <span class="ta-theme-name">${theme}</span>
+        <span class="ta-count">${cnt} project${cnt>1?'s':''}</span>
+        <button class="ta-link-all" onclick="event.stopPropagation();filterByTheme('${theme.replace(/'/g,"\\'")}')">View in All Projects ↗</button>
+        <span class="ta-chevron">▾</span>
+      </button>
+      <div class="ta-body" id="tabody-${safeId}">
+        <div class="ta-table-wrap">
+          <table class="ta-table">
+            <thead><tr><th>#</th><th>Client</th><th>Project Name</th><th>Unit</th><th>Location</th><th>Year</th></tr></thead>
+            <tbody>${rows}</tbody>
+          </table>
+        </div>
+      </div>
+    </div>`;
+  });
+}
+
+function toggleThemeAccordion(safeId) {
+  const toggle = document.getElementById('tatog-'+safeId);
+  const body   = document.getElementById('tabody-'+safeId);
+  if(!toggle||!body) return;
+  const isOpen = body.classList.contains('open');
+  /* close all */
+  document.querySelectorAll('.ta-body').forEach(b=>b.classList.remove('open'));
+  document.querySelectorAll('.ta-toggle').forEach(b=>b.classList.remove('open'));
+  if(!isOpen){
+    body.classList.add('open');
+    toggle.classList.add('open');
+  }
+}
+
+function badgeClass(unit) {
+  if(unit==='EDU') return 'badge-EDU';
+  if(unit==='Business and Economic Development') return 'badge-Business and Economic Development';
+  if(unit==='SII') return 'badge-SII';
+  if(unit==='VN') return 'badge-VN';
+  if(unit==='Deep South') return 'badge-Deep-South';
+  return 'badge-other';
+}
+
+function buildTable(projects, containerId) {
+  const wrap = document.createElement('div');
+  wrap.className = 'table-wrap';
+  const table = document.createElement('table');
+  table.className = 'proj-table';
+  table.innerHTML = `<thead><tr>
+    <th>#</th><th>Client</th><th>Project Name</th><th>Unit</th><th>Theme</th><th>Location</th><th>Years</th>
+  </tr></thead>`;
+  const tbody = document.createElement('tbody');
+  projects.forEach((p,i) => {
+    const yr = p['Start Year'] && p['End Year'] ? p['Start Year']+'–'+p['End Year'] : (p['Start Year']||p['End Year']||'–');
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td style="color:var(--blue-400);font-weight:700">${i+1}</td>
+      <td class="col-client">${p.Client||'–'}</td>
+      <td class="col-name">${p['Project Name']||'–'}</td>
+      <td><span class="badge ${badgeClass(p.Unit)}">${p.Unit||'–'}</span></td>
+      <td style="color:var(--blue-300);font-size:11.5px">${p['Project Theme']||'–'}</td>
+      <td style="font-size:11.5px;color:var(--blue-200)">${p.Location||'–'}</td>
+      <td style="font-size:11.5px;white-space:nowrap">${yr}</td>
+    `;
+    tr.onclick = () => openModal(p);
+    tbody.appendChild(tr);
+  });
+  table.appendChild(tbody);
+  wrap.appendChild(table);
+  const container = document.getElementById(containerId);
+  container.innerHTML = '';
+  container.appendChild(wrap);
+}
+
+function buildUnitTables() {
+  const sections = [
+    {id:'table-edu', unit:'EDU', cntId:'cnt-edu'},
+    {id:'table-Business and Economic Development', unit:'Business and Economic Development', cntId:'cnt-Business and Economic Development'},
+    {id:'table-SII', unit:'SII', cntId:'cnt-SII'},
+    {id:'table-vn', unit:'VN', cntId:'cnt-vn'},
+    {id:'table-ds', unit:'Deep South', cntId:'cnt-ds'},
+  ];
+  sections.forEach(s => {
+    const projs = ALL_PROJECTS.filter(p => p.Unit===s.unit);
+    document.getElementById(s.cntId).textContent = projs.length + ' Projects';
+    buildTable(projs, s.id);
+  });
+}
+
+// ─── ALL PROJECTS TABLE WITH PAGING ──────
+let allFiltered = ALL_PROJECTS.slice();
+let currentUnit = '';
+let currentPage = 0;
+const PAGE_SIZE = 20;
+
+function setUnitFilter(unit) {
+  currentUnit = unit;
+  currentPage = 0;
+  document.querySelectorAll('#all-filter-bar .filter-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  applyFilter();
+}
+function clearThemeFilter() {
+  currentTheme = '';
+  document.querySelectorAll('#all-theme-pills .filter-btn').forEach(b=>b.classList.remove('active'));
+  const a=document.getElementById('apill-ALL'); if(a)a.classList.add('active');
+  document.querySelectorAll('.theme-filter-pill').forEach(b=>b.classList.remove('active'));
+  const t=document.getElementById('tpill-ALL'); if(t)t.classList.add('active');
+  const lbl=document.getElementById('active-theme-label'); if(lbl)lbl.style.display='none';
+  applyFilter();
+}
+
+function applyFilter() {
+  const q = document.getElementById('search-box').value.toLowerCase();
+  allFiltered = ALL_PROJECTS.filter(p => {
+    const unitOk  = !currentUnit  || p.Unit===currentUnit;
+    const themeOk = !currentTheme || p['Project Theme']===currentTheme;
+    const searchOk = !q || (p.Client||'').toLowerCase().includes(q) ||
+      (p['Project Name']||'').toLowerCase().includes(q) ||
+      (p['Project Theme']||'').toLowerCase().includes(q) ||
+      (p.Location||'').toLowerCase().includes(q);
+    return unitOk && themeOk && searchOk;
+  });
+  currentPage = 0;
+  renderAllTable();
+}
+
+function buildAllTable() { allFiltered = ALL_PROJECTS.slice(); renderAllTable(); }
+
+function renderAllTable() {
+  const start = currentPage * PAGE_SIZE;
+  const page = allFiltered.slice(start, start+PAGE_SIZE);
+  buildTable(page.map((p,i)=>({...p, _n: start+i+1})), 'table-all');
+  // fix numbering
+  const trs = document.querySelectorAll('#table-all tbody tr');
+  trs.forEach((tr,i) => { tr.cells[0].textContent = start+i+1; });
+  document.getElementById('pager-info').textContent = `Showing ${start+1}–${Math.min(start+page.length, allFiltered.length)} of ${allFiltered.length} projects`;
+  document.getElementById('btn-prev').disabled = currentPage===0;
+  document.getElementById('btn-next').disabled = start+PAGE_SIZE>=allFiltered.length;
+}
+
+function changePage(dir) {
+  currentPage += dir;
+  renderAllTable();
+  document.getElementById('allprojects').scrollIntoView({behavior:'smooth'});
+}
+
+// ─── MODAL ────────────────────────────────
+function openModal(p) {
+  const cfg = UNIT_CONFIG[p.Unit]||{label:p.Unit,emoji:'📌',color:'#6ba3f8'};
+  document.getElementById('m-unit').innerHTML = `<span class="badge ${badgeClass(p.Unit)}">${cfg.emoji} ${p.Unit||'N/A'}</span>`;
+  document.getElementById('m-title').textContent = p['Project Name']||'Untitled';
+  document.getElementById('m-client').textContent = '👥 ' + (p.Client||'–');
+  const yr = p['Start Year'] && p['End Year'] ? p['Start Year']+' – '+p['End Year'] : (p['Start Year']||p['End Year']||'N/A');
+  document.getElementById('m-meta').innerHTML = `
+    <div class="modal-meta-item"><div class="modal-meta-label">Theme</div><div class="modal-meta-value">${p['Project Theme']||'–'}</div></div>
+    <div class="modal-meta-item"><div class="modal-meta-label">Location</div><div class="modal-meta-value">${p.Location||'Thailand/Regional'}</div></div>
+    <div class="modal-meta-item"><div class="modal-meta-label">Period</div><div class="modal-meta-value">${yr}</div></div>
+    <div class="modal-meta-item"><div class="modal-meta-label">Unit</div><div class="modal-meta-value">${p.Unit||'–'}</div></div>
+  `;
+  const desc = (p.Description||'No description available.').replace(/\n/g,'<br>');
+  document.getElementById('m-desc').innerHTML = desc;
+  document.getElementById('modal-overlay').classList.add('open');
+}
+function closeModal(e) { if(e.target.id==='modal-overlay') closeModalDirect(); }
+function closeModalDirect() { document.getElementById('modal-overlay').classList.remove('open'); }
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeModalDirect(); });
+
+
+// Sidebar active state on scroll
+const sections = document.querySelectorAll('.section');
+window.addEventListener('scroll', () => {
+  let current='overview';
+  sections.forEach(s=>{if(window.scrollY>=s.offsetTop-120) current=s.id;});
+  document.querySelectorAll('.nav-item').forEach(n=>{
+    n.classList.toggle('active', n.getAttribute('href')==='#'+current);
+  });
+});
+
+// ── Smooth scroll for all anchor links ────────────────
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+  link.addEventListener('click', function(e) {
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+// ── Scroll to top ──────────────────────────────────────
+function scrollToTop() {
+  const top = document.getElementById('top');
+  if (top) top.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ── Floating back-to-top visibility ───────────────────
+const bttBtn = document.getElementById('back-to-top');
+window.addEventListener('scroll', () => {
+  if (bttBtn) bttBtn.classList.toggle('visible', window.scrollY > 400);
+}, { passive: true });
+
+</script>
+
+<!-- BACK TO TOP BUTTON -->
+<button class="back-to-top" id="back-to-top" onclick="scrollToTop()" title="Back to top">↑</button>
+</body>
+</html>
